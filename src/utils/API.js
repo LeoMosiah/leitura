@@ -110,3 +110,9 @@ export const generateUID = () =>
   Math.random()
     .toString(36)
     .substring(2, 15);
+
+export function getInitialData() {
+  return Promise.all([getPosts()]).then(([posts]) => ({
+    posts
+  }));
+}
