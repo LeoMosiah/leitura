@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import _ from "lodash";
 
 const url = "https://arcane-harbor-18219.herokuapp.com";
+=======
+>>>>>>> 7dbc2f4311f1b5db99a7735885591adee0e83ff8
 
 let token = localStorage.token;
 if (!token)
