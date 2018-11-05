@@ -1,4 +1,6 @@
-const api = "https://arcane-harbor-18219.herokuapp.com";
+import _ from "lodash";
+
+const url = "https://arcane-harbor-18219.herokuapp.com";
 
 let token = localStorage.token;
 if (!token)
@@ -7,31 +9,105 @@ if (!token)
     .substr(-8);
 
 const headers = {
-  Accept: "application/json",
-  Authorization: token
+  headers: {
+    Accept: "application/json",
+    Authorization: token
+  }
 };
 
 export const getCategories = () =>
-  fetch(`${api}/categories`, { headers: { Authorization: headers } })
+  fetch(`${url}/categories`, headers)
     .then(res => res.json())
     .then(data => data.categories);
 
 export const getPosts = () =>
-  fetch(`${api}/posts`, { headers: { Authorization: headers } }).then(res =>
-    res.json()
-  );
+  fetch(`${url}/posts`, headers).then(res => res.json());
 
 export const getPostByCategory = category =>
-  fetch(`${api}/:redux/posts`, {
-    headers: { Authorization: headers }
-  }).then(res => res.json());
+  fetch(`${url}/${category}/posts`, headers).then(res => res.json());
 
-export const updateComment = (id, text) =>
-  fetch(`${api}/comments/:${id}`, {
-    method: "PUT",
+export const getPostById = id =>
+  fetch(`${url}/posts/${id}`, headers).then(res => res.json());
+
+export const getComments = id =>
+  fetch(`${url}/posts/${id}/comments`, headers).then(res => res.json());
+
+export const getComment = id =>
+  fetch(`${url}/comments/${id}`, headers).then(res => res.json());
+
+export const addPost = post =>
+  fetch(`${url}/posts`, {
+    method: "POST",
     headers: {
-      ...headers,
+      Accept: "application/json",
+      Authorization: token,
       "Content-Type": "application/json"
     },
-    body: text
+    body: JSON.stringify(post)
   }).then(res => res.json());
+
+export const votePost = id =>
+  fetch(`${url}/posts/${id}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ option: "upVote" })
+  }).then(res => res.json());
+
+export const changePost = (id, text) =>
+  fetch(`${url}/posts/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(text)
+  }).then(res => res.json());
+
+export const addComment = comment =>
+  fetch(`${url}/comments/`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json());
+
+export const voteComment = id =>
+  fetch(`${url}/comments/${id}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ option: "upVote" })
+  }).then(res => res.json());
+
+export const changeComment = (id, text) =>
+  fetch(`${url}/comments/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      timestamp: _.now(),
+      body: text
+    })
+  }).then(res => res.json());
+
+export const generateUID = () =>
+  Math.random()
+    .toString(36)
+    .substring(2, 15) +
+  Math.random()
+    .toString(36)
+    .substring(2, 15);
