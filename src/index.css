@@ -12,3 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.navigation-bar__categories{
+  justify-content:space-between;
+  margin-top: .5rem;
+}
+.navigation-bar__category{
+  text-decoration : none !important;
+}
