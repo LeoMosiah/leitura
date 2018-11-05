@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Pane, Button, SearchInput, Paragraph, Link } from "evergreen-ui";
 
-class NavBar extends Component {
+class Header extends Component {
   render() {
     return (
       <Pane>  
@@ -50,4 +50,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default Header;
