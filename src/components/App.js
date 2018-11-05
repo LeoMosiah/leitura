@@ -1,30 +1,27 @@
 import React, { Component } from "react";
-import * as API from "../utils/API";
-import Post from "./Post";
+import { connect } from "react-redux";
+import { handleInitialData } from "../actions/shared";
+import Home from "./Home";
+import * as API from "../utils/api";
+import { Pane} from "evergreen-ui";
 
 class App extends Component {
   state = {
-    posts: [],
-    categories: [],
-    comments: [],
-    comment: []
+    categories: []
   };
-  async componentDidMount() {
+  componentDidMount() {
+    this.props.dispatch(handleInitialData());
     this.setState({
-      categories: await API.getCategories(),
-      posts: await API.getPosts(),
-      comments: await API.getComments("8xf0y6ziyjabvozdd253nd"),
-      comment: await API.getComment("894tuq4ut84ut8v4t8wun89g")
+      categories: API.getCategories()
     });
   }
   render() {
-    const { posts, categories, comments, comment } = this.state;
     return (
-      <div>
-        <Post posts={posts} />
-      </div>
+      <Pane paddingTop={15} paddingBottom={15} paddingLeft={50} paddingRight={50}>
+        <Home />
+      </Pane>
     );
   }
 }
 
-export default App;
+export default connect()(App);
