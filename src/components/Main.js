@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Pane,Heading } from "evergreen-ui";
+import PostContainer from "./PostContainer"
 
 
 class Main extends Component {
@@ -7,10 +8,12 @@ class Main extends Component {
         return (
             <Pane display="flex">
                 <Pane width="60%">
-                    <Heading>News</Heading>
+                    <Heading marginTop={20} borderBottom="solid 1px" >News</Heading>
+                    <PostContainer/>
                 </Pane>
                 <Pane width="40%">
-                    <Heading>Hot</Heading>
+                    <Heading marginTop={20} marginLeft={5} borderBottom="solid 1px">Hot</Heading>
+                    <PostContainer/>
                 </Pane>
             </Pane>    
         )

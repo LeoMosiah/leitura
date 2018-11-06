@@ -1,22 +1,27 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Pane, Card } from "evergreen-ui";
+import Paragraph from "evergreen-ui/esm/typography/src/Paragraph";
+import Pane from "evergreen-ui/esm/layers/src/Pane";
+import Heading from "evergreen-ui/esm/typography/src/Heading";
+import {IconButton} from "evergreen-ui";
 
 class Post extends Component {
-  render() {
-    const { post } = this.props;
-    return (
-      <Pane background="tint1" elevation={3}>
-        <Icon icon="filter" color="danger" marginRight={16} />
-        <Icon icon="tick-circle" color="success" marginRight={16} />
-        <Icon icon="warning-sign" color="warning" marginRight={16} />
-        <Icon icon="info-sign" color="info" marginRight={16} />
-        <Icon icon="edit" color="muted" marginRight={16} />
-        <Icon icon="edit" color="selected" marginRight={16} />
-        <Icon icon="edit" color="disabled" marginRight={16} />
-      </Pane>
-    );
-  }
+    render(){
+        return(
+            <Pane border="default"
+                  cursor="pointer"
+                  elevation={2}
+                  padding={10}>
+              <Pane onClick={() => alert('Works just like expected')}>
+                <Heading>Titulo do Post</Heading>
+                <Paragraph>Conteudo do posto que tem o titulo em cima disso</Paragraph>
+              </Pane>
+                <Pane display="flex">
+                    <IconButton appearance="minimal" icon="notifications" iconSize={18} />
+                    <IconButton appearance="minimal" icon="annotation" iconSize={18} />
+                </Pane>
+            </Pane>
+        )
+    }
 }
 
 export default Post;

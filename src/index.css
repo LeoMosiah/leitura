@@ -19,3 +19,7 @@ code {
 .navigation-bar__category{
   text-decoration : none !important;
 }
+li{
+  list-style: none;
+  margin-left: -1.8rem;
+}

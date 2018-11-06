@@ -12,7 +12,8 @@
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
     "redux-saga": "^0.16.2",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "lodash": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -28,5 +29,14 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }

@@ -3,13 +3,16 @@ import Post from "./Post";
 
 class PostContainer extends Component {
   render() {
-    const { posts } = this.props;
     return (
       <div>
         <ul>
-          <li />
+          <li>
+              <Post/>
+          </li>
         </ul>
       </div>
     );
   }
 }
+
+export  default PostContainer;
