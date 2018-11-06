@@ -5,5 +5,6 @@ import posts from "./posts";
 
 export default combineReducers({
   authedUser,
-  posts
+  posts,
+  comments
 });
