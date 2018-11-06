@@ -8,9 +8,10 @@ const AUTHED_ID = "leomosiah";
 
 export function handleInitialData() {
   return dispatch => {
-    return getInitialData().then(({ posts }) => {
+    return getInitialData().then(({ posts, comments }) => {
       dispatch(receivePosts(posts));
       dispatch(setAuthedUser(AUTHED_ID));
+      dispatch(receiveComments(comments));
     });
   };
 }
