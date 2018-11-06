@@ -110,8 +110,17 @@ export const generateUID = () =>
     .toString(36)
     .substring(2, 15);
 
-export function getInitialData() {
-  return Promise.all([getPosts()]).then(([posts]) => ({
-    posts
-  }));
+export async function getInitialData() {
+  const postsFecthed = await getPosts();
+
+  const posts = Object.assign(
+    {},
+    ...postsFecthed.map(elem => ({ [elem.id]: elem }))
+  );
+
+  const comments = (await Promise.all(
+    postsFecthed.map(async post => await getComments(post.id))
+  )).filter(comment => comment.length);
+
+  return { posts, comments };
 }
