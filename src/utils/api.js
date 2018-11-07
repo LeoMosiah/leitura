@@ -124,3 +124,7 @@ export async function getInitialData() {
 
   return { posts, comments };
 }
+
+export const tranformArrayOfCommentsIntoMap = commentsArray => {
+  return commentsArray;
+};
