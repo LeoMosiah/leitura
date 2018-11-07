@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Pane } from "evergreen-ui";
-import Header from "./Header"
-import Main from "./Main"
+import Header from "./Header";
+import Main from "./Main";
 
 class Home extends Component {
   render() {
+    const { categories } = this.props;
     return (
       <Pane>
-          <Header/>
-          <Main/>
+        <Header categories={categories} />
+        <Main />
       </Pane>
     );
   }
