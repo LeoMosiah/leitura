@@ -10,7 +10,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.categories);
     return (
       <Pane
         paddingTop={15}
