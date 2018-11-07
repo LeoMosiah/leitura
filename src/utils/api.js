@@ -122,6 +122,10 @@ export async function getInitialData() {
   const posts = tranformArrayIntoMap(postsArray);
   const comments = tranformArrayIntoMap(commentsArrayFilteredByEmptyComments);
 
-  return { posts, comments };
+  const categoriesArray = await getCategories();
+
+  const categories = tranformArrayIntoMap(categoriesArray);
+
+  return { posts, comments, categories };
 }
 
