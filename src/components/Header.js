@@ -15,7 +15,6 @@ class Header extends Component {
   };
   handleClick() {}
   render() {
-    const { categories } = this.props;
     return (
       <Pane>
         <Pane display="flex">
