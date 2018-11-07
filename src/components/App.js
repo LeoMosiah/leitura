@@ -2,19 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Home from "./Home";
-import * as API from "../utils/api";
 import { Pane } from "evergreen-ui";
 
 class App extends Component {
-  state = {
-    categories: []
-  };
   async componentDidMount() {
     this.props.dispatch(handleInitialData());
-    this.setState({ categories: await API.getCategories() });
   }
 
   render() {
+    console.log(this.state.categories);
     return (
       <Pane
         paddingTop={15}
