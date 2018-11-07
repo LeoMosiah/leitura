@@ -7,12 +7,11 @@ import { Pane } from "evergreen-ui";
 
 class App extends Component {
   state = {
-    categories: [],
-    data: []
+    categories: []
   };
-  componentDidMount() {
+  async componentDidMount() {
     this.props.dispatch(handleInitialData());
-    this.setState({ categories: API.getCategories() });
+    this.setState({ categories: await API.getCategories() });
   }
 
   render() {
@@ -23,7 +22,7 @@ class App extends Component {
         paddingLeft={50}
         paddingRight={50}
       >
-        <Home />
+        <Home categories={this.state.categories} />
       </Pane>
     );
   }
