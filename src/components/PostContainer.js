@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import Post from "./Post";
 import { connect } from "react-redux";
 
-const byCategory = post => post.category === "redux";
+const category = ["redux", "react", "udacity"];
+const byCategory = post => category.includes(post.category);
 
 class PostContainer extends Component {
   render() {
     const { posts, authedUser } = this.props;
-    const category = "redux";
     return (
       <div>
         <ul>
