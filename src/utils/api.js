@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { tranformArrayIntoMap } from "./helper";
 
 let token = localStorage.token;
 if (!token)
@@ -97,7 +97,7 @@ export const changeComment = (id, text) =>
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      timestamp: _.now(),
+      timestamp: Date.now(),
       body: text
     })
   }).then(res => res.json());
@@ -111,20 +111,17 @@ export const generateUID = () =>
     .substring(2, 15);
 
 export async function getInitialData() {
-  const postsFecthed = await getPosts();
-
-  const posts = Object.assign(
-    {},
-    ...postsFecthed.map(elem => ({ [elem.id]: elem }))
+  const postsArray = await getPosts();
+  const commentsArrayByPost = await Promise.all(
+    postsArray.map(async post => await getComments(post.id))
+  );
+  const commentsArrayFilteredByEmptyComments = commentsArrayByPost.filter(
+    comment => comment.length
   );
 
-  const comments = (await Promise.all(
-    postsFecthed.map(async post => await getComments(post.id))
-  )).filter(comment => comment.length);
+  const posts = tranformArrayIntoMap(postsArray);
+  const comments = tranformArrayIntoMap(commentsArrayFilteredByEmptyComments);
 
   return { posts, comments };
 }
 
-export const tranformArrayOfCommentsIntoMap = commentsArray => {
-  return commentsArray;
-};
