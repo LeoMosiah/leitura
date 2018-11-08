@@ -1,4 +1,9 @@
 import { tranformArrayIntoMap } from "./helper";
+import dotev from "dotenv";
+
+dotev.config();
+
+const url = process.env.API_URL;
 
 let token = localStorage.token;
 if (!token)
@@ -120,12 +125,8 @@ export async function getInitialData() {
   );
 
   const posts = tranformArrayIntoMap(postsArray);
+
   const comments = tranformArrayIntoMap(commentsArrayFilteredByEmptyComments);
 
-  const categoriesArray = await getCategories();
-
-  const categories = tranformArrayIntoMap(categoriesArray);
-
-  return { posts, comments, categories };
+  return { posts, comments };
 }
-

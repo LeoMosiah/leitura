@@ -1,18 +1,30 @@
-import React, { Component } from "react";
+import React from "react";
 import { Pane } from "evergreen-ui";
 import Header from "./Header";
 import Main from "./Main";
+import Button from "evergreen-ui/esm/buttons/src/Button";
 
-class Home extends Component {
-  render() {
-    const { categories } = this.props;
-    return (
-      <Pane>
-        <Header categories={categories} />
-        <Main />
-      </Pane>
-    );
-  }
+function Home(props) {
+  const {
+    categories,
+    handleOpenDialog,
+    dialogIsShown,
+    handleCloseDialog
+  } = props;
+  return (
+    <Pane>
+      <Header
+        categories={categories}
+        handleOpenDialog={handleOpenDialog}
+        dialogIsShown={dialogIsShown}
+        handleCloseDialog={handleCloseDialog}
+      />
+      <Main />
+      <Button size={38} appearance="minimal" iconAfter="edit">
+        New Post
+      </Button>
+    </Pane>
+  );
 }
 
 export default Home;
