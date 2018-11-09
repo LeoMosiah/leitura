@@ -1,14 +1,10 @@
 import React from "react";
 import { Button, Dialog, Pane, Paragraph, SearchInput } from "evergreen-ui";
 import SignInForm from "./SingInForm";
+import connect from "react-redux/src/connect/connect";
 
 function Header(props) {
-  const {
-    categories,
-    handleOpenDialog,
-    dialogIsShown,
-    handleCloseDialog
-  } = props;
+  const { categories } = props;
   return (
     <Pane>
       <Pane display="flex">
@@ -24,7 +20,6 @@ function Header(props) {
             marginBottom={4}
             appearance="primary"
             intent="success"
-            onClick={() => handleOpenDialog()}
           >
             Log In
           </Button>
@@ -43,7 +38,7 @@ function Header(props) {
         width="100%"
         className="navigation-bar__categories"
       >
-        {categories.map(category => (
+        {Object.values(categories).map(category => (
           <Button
             marginRight={12}
             appearance="minimal"
@@ -56,9 +51,8 @@ function Header(props) {
         ))}
       </Pane>
       <Dialog
-        isShown={dialogIsShown}
+        isShown={false}
         title="Sign in to your Leitura's account!"
-        onCloseComplete={() => handleCloseDialog()}
         confirmLabel="Custom Label"
         hasFooter={false}
       >
@@ -67,5 +61,10 @@ function Header(props) {
     </Pane>
   );
 }
+function mapStateToProps({ categories }) {
+  return {
+    categories
+  };
+}
 
-export default Header;
+export default connect(mapStateToProps)(Header);

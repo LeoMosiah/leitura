@@ -3,8 +3,6 @@ import dotev from "dotenv";
 
 dotev.config();
 
-const url = process.env.API_URL;
-
 let token = localStorage.token;
 if (!token)
   token = localStorage.token = Math.random()
@@ -128,5 +126,7 @@ export async function getInitialData() {
 
   const comments = tranformArrayIntoMap(commentsArrayFilteredByEmptyComments);
 
-  return { posts, comments };
+  const categories = tranformArrayIntoMap(await getCategories());
+
+  return { posts, comments, categories };
 }

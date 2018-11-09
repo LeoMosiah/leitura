@@ -1,47 +1,30 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Home from "./Home";
 import { Pane } from "evergreen-ui";
-import * as API from "../utils/api";
+import PostPage from "./PostPage";
+import NewPost from "./NewPost";
 
 class App extends Component {
-  state = {
-    categories: [],
-    dialogIsShown: false
-  };
   async componentDidMount() {
     this.props.dispatch(handleInitialData());
-    this.setState({
-      categories: await API.getCategories()
-    });
-  }
-  handleOpenDialog() {
-    this.setState({
-      dialogIsShown: true
-    });
-  }
-  handleCloseDialog() {
-    this.setState({
-      dialogIsShown: false
-    });
   }
   render() {
-    const { categories, dialogIsShown } = this.state;
     return (
-      <Pane
-        paddingTop={15}
-        paddingBottom={15}
-        paddingLeft={50}
-        paddingRight={50}
-      >
-        <Home
-          categories={categories}
-          handleOpenDialog={() => this.handleOpenDialog()}
-          handleCloseDialog={() => this.handleCloseDialog()}
-          dialogIsShown={dialogIsShown}
-        />
-      </Pane>
+      <Router>
+        <Pane
+          paddingTop={15}
+          paddingBottom={15}
+          paddingLeft={50}
+          paddingRight={50}
+        >
+          <Route exact path="/" component={Home} />
+          <Route path="/post/:id" component={PostPage} />
+          <Route path="/new" component={NewPost} />
+        </Pane>
+      </Router>
     );
   }
 }

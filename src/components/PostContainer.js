@@ -2,30 +2,26 @@ import React from "react";
 import Post from "./Post";
 import { connect } from "react-redux";
 
-const category = ["redux", "react", "udacity"];
-const byCategory = post => category.includes(post.category);
-
 function PostContainer(props) {
-  const { posts, authedUser } = props;
+  const { postIds } = props;
   return (
     <div>
       <ul>
-        {Object.values(posts)
-          .filter(byCategory)
-          .map(post => (
-            <li key={post.id}>
-              <Post post={post} />
-            </li>
-          ))}
+        {postIds.map(id => (
+          <li key={id}>
+            <Post id={id} />
+          </li>
+        ))}
       </ul>
     </div>
   );
 }
 
-function mapStateToProps({ posts, authedUser }) {
+function mapStateToProps({ posts }) {
   return {
-    authedUser,
-    posts
+    postIds: Object.keys(posts).sort(
+      (a, b) => posts[b].timestamp - posts[a].timestamp
+    )
   };
 }
 

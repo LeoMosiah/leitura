@@ -3,6 +3,7 @@ import Paragraph from "evergreen-ui/esm/typography/src/Paragraph";
 import Pane from "evergreen-ui/esm/layers/src/Pane";
 import Heading from "evergreen-ui/esm/typography/src/Heading";
 import { Icon, Pill } from "evergreen-ui";
+import connect from "react-redux/src/connect/connect";
 
 function Post(props) {
   const { post } = props;
@@ -31,4 +32,13 @@ function Post(props) {
   );
 }
 
-export default Post;
+function mapStateToProps({ posts, authedUser }, { id }) {
+  const post = posts[id];
+
+  return {
+    authedUser,
+    post
+  };
+}
+
+export default connect(mapStateToProps)(Post);
