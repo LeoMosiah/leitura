@@ -4,19 +4,19 @@ import Post from "./Post";
 
 class PostPage extends Component {
   render() {
-    const { id } = this.props;
+    const { post_id } = this.props;
     return (
       <div>
-        <Post id={id} />
+        <Post id={post_id} />
       </div>
     );
   }
 }
 
 function mapStateToProps({ authedUser, posts }, props) {
-  const { id } = props.match.params;
+  const { post_id } = props.match.params;
   return {
-    id
+    post_id
   };
 }
 
