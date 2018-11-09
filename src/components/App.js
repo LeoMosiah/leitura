@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { handleInitialData } from "../actions/shared";
 import Home from "./Home";
-import { Pane } from "evergreen-ui";
 import PostPage from "./PostPage";
+import { Pane } from "evergreen-ui";
 import NewPost from "./NewPost";
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
           paddingRight={50}
         >
           <Route exact path="/" component={Home} />
-          <Route path="/post/:id" component={PostPage} />
+          <Route path="/:category/:post_id" component={PostPage} />
           <Route path="/new" component={NewPost} />
         </Pane>
       </Router>
