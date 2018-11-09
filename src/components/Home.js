@@ -1,24 +1,14 @@
 import React from "react";
-import { Pane, Icon, Link } from "evergreen-ui";
 import Header from "./Header";
 import Main from "./Main";
-import Button from "evergreen-ui/esm/buttons/src/Button";
+import Pane from "evergreen-ui/esm/layers/src/Pane";
+import Icon from "evergreen-ui/esm/icon/src/Icon";
+import Link from "react-router-dom/es/Link";
 
-function Home(props) {
-  const {
-    categories,
-    handleOpenDialog,
-    dialogIsShown,
-    handleCloseDialog
-  } = props;
+function Home() {
   return (
     <Pane>
-      <Header
-        categories={categories}
-        handleOpenDialog={handleOpenDialog}
-        dialogIsShown={dialogIsShown}
-        handleCloseDialog={handleCloseDialog}
-      />
+      <Header />
       <Main />
       <Pane
         position="fixed"
@@ -29,7 +19,7 @@ function Home(props) {
         width="50px"
         height="50px"
       >
-        <Link href="#">
+        <Link to="/new">
           <Icon
             icon="edit"
             size={30}
