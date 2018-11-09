@@ -12,14 +12,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.navigation-bar__categories{
-  justify-content:space-between;
-  margin-top: .5rem;
+.navigation-bar__categories {
+  justify-content: space-between;
+  margin-top: 0.5rem;
 }
-.navigation-bar__category{
-  text-decoration : none !important;
+.navigation-bar__category {
+  text-decoration: none !important;
 }
-li{
+li {
   list-style: none;
   margin-left: -1.8rem;
+}
+a {
+  text-decoration: none;
 }
