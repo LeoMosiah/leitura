@@ -3,37 +3,61 @@ import Pane from "evergreen-ui/esm/layers/src/Pane";
 import Textarea from "evergreen-ui/esm/textarea/src/Textarea";
 import Select from "evergreen-ui/esm/select/src/Select";
 import TextInput from "evergreen-ui/esm/text-input/src/TextInput";
+import { Button } from "evergreen-ui";
+import { addPost } from "../utils/api";
 
 class NewPost extends Component {
   state = {
-    body: ""
+    body: "",
+    title: "",
+    category: ""
   };
-  handleChange = e => {
-    const text = e.target.value;
-
+  handleBody = string => {
     this.setState({
-      body: text
+      body: string
+    });
+  };
+  handleTitle = string => {
+    this.setState({
+      title: string
+    });
+  };
+  handleCategory = string => {
+    this.setState({
+      category: string
     });
   };
   handleSubmit = e => {
     e.preventDefault();
-
-    const { body } = this.state;
-
+    const { body, title, category } = this.state;
+    addPost({
+      category,
+      title,
+      body
+    });
     this.setState({
-      body: ""
+      body: "",
+      title: "",
+      category: ""
     });
   };
   render() {
     return (
       <Pane textAlign="center">
         <Pane>
-          <Select marginBottom={20}>
+          <Select
+            marginBottom={20}
+            onChange={event => this.handleCategory(event.target.value)}
+          >
             <option value="Redux" checked label="Redux" />
             <option value="React" label="React" />
             <option value="Udacity" label="Udacity" />
           </Select>
-          <TextInput name="post-title" placeholder="Title" />
+          <TextInput
+            name="post-title"
+            placeholder="Title"
+            onChange={event => this.handleTitle(event.target.value)}
+          />
         </Pane>
         <Pane>
           <Textarea
@@ -41,8 +65,17 @@ class NewPost extends Component {
             height={300}
             name="body"
             placeholder="Write your post right here"
+            onChange={event => this.handleBody(event.target.value)}
           />
         </Pane>
+        <Button
+          onClick={e => this.handleSubmit(e)}
+          appearance="primary"
+          marginRight={16}
+          intent="success"
+        >
+          Post
+        </Button>
       </Pane>
     );
   }

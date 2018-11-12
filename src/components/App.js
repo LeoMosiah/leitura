@@ -18,6 +18,7 @@ class App extends Component {
         paddingBottom={15}
         paddingLeft={50}
         paddingRight={50}
+        background="greenTint"
       >
         <Route exact path="/" component={Home} />
         <Route path="/:category/:post_id" component={PostPage} />

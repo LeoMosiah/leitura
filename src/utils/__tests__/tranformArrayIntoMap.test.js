@@ -1,6 +1,6 @@
 import { tranformArrayIntoMap } from "../helper";
 
-describe("helper", () => {
+describe("tranformArrayIntoMap", () => {
   it("maps array of posts into dictionary", () => {
     const expectedDictionary = {
       1: {
