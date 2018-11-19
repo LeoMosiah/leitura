@@ -1,4 +1,4 @@
-import { timestampToDate } from "../helper";
+import { timestampToDate } from "../utils/helper";
 
 describe("timestampToDate", () => {
   it("maps array of posts into dictionary", () => {

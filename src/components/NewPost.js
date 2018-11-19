@@ -1,16 +1,19 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Pane from "evergreen-ui/esm/layers/src/Pane";
 import Textarea from "evergreen-ui/esm/textarea/src/Textarea";
 import Select from "evergreen-ui/esm/select/src/Select";
 import TextInput from "evergreen-ui/esm/text-input/src/TextInput";
 import { Button } from "evergreen-ui";
-import { addPost } from "../utils/api";
+import { addPost, handleAddPost } from "../actions/posts";
 
 class NewPost extends Component {
   state = {
     body: "",
     title: "",
-    category: ""
+    category: "",
+    toHome: false
   };
   handleBody = string => {
     this.setState({
@@ -30,18 +33,22 @@ class NewPost extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { body, title, category } = this.state;
-    addPost({
-      category,
-      title,
-      body
-    });
-    this.setState({
+    const { dispatch } = this.props;
+
+    let post = { body, title, category };
+
+    dispatch(handleAddPost(post));
+
+    this.setState(() => ({
       body: "",
       title: "",
-      category: ""
-    });
+      category: "",
+      toHome: true
+    }));
   };
   render() {
+    const { toHome } = this.state;
+    if (toHome) return <Redirect to="/" />;
     return (
       <Pane textAlign="center">
         <Pane>
@@ -81,4 +88,4 @@ class NewPost extends Component {
   }
 }
 
-export default NewPost;
+export default connect()(NewPost);

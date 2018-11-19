@@ -1,4 +1,4 @@
-import { tranformArrayIntoMap } from "../helper";
+import { tranformArrayIntoMap } from "../utils/helper";
 
 describe("tranformArrayIntoMap", () => {
   it("maps array of posts into dictionary", () => {

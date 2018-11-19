@@ -1,20 +1,36 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import connect from "react-redux/src/connect/connect";
-import Post from "./Post";
 import Pane from "evergreen-ui/esm/layers/src/Pane";
-import { Avatar, Text, Heading, Paragraph } from "evergreen-ui";
+import { Avatar, IconButton, Paragraph } from "evergreen-ui";
 import Comment from "./Comment";
 import { timestampToDate } from "../utils/helper";
+import { handleDeletePost } from "../actions/posts";
+import { deletePost } from "../utils/api";
 
 class PostPage extends Component {
+  state = {
+    toHome: false
+  };
+  handleDelete(id) {
+    const { dispatch } = this.props;
+
+    dispatch(handleDeletePost(id));
+
+    this.setState(() => ({
+      toHome: true
+    }));
+  }
   render() {
     const { post, postComments } = this.props;
+    const { toHome } = this.state;
+    if (toHome) return <Redirect to="/" />;
     return (
       <Pane
         paddingTop={15}
         paddingBottom={15}
-        paddingLeft={300}
-        paddingRight={300}
+        paddingLeft={270}
+        paddingRight={270}
       >
         <Pane>
           <Pane clearfix>
@@ -31,6 +47,21 @@ class PostPage extends Component {
             </Pane>
           </Pane>
           <h2>{post.title}</h2>
+        </Pane>
+        <Pane overflow="hidden">
+          <img
+            src="https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=1080&fit=max"
+            alt="post image"
+          />
+        </Pane>
+        <Pane marginTop={20}>
+          <Paragraph>{post.body}</Paragraph>
+          <IconButton
+            icon="trash"
+            intent="danger"
+            apperence="minimal"
+            onClick={() => deletePost(post.id)}
+          />
         </Pane>
         {postComments.length !== 0 &&
           postComments.map(comment => (

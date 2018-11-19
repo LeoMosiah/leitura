@@ -8,13 +8,22 @@ if (!token)
   token = localStorage.token = Math.random()
     .toString(36)
     .substr(-8);
-
 const headers = {
   headers: {
     Accept: "application/json",
     Authorization: token
   }
 };
+
+export const deletePost = id =>
+  fetch(`${url}/posts/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());
 
 export const getCategories = () =>
   fetch(`${url}/categories`, headers)
@@ -36,7 +45,7 @@ export const getComments = id =>
 export const getComment = id =>
   fetch(`${url}/comments/${id}`, headers).then(res => res.json());
 
-export const addPost = post =>
+export const savePost = post =>
   fetch(`${url}/posts`, {
     method: "POST",
     headers: {

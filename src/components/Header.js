@@ -33,11 +33,7 @@ function Header(props) {
           </Button>
         </Pane>
       </Pane>
-      <Pane
-        display="inline-flex"
-        width="100%"
-        className="navigation-bar__categories"
-      >
+      <Pane className="navigation-bar__categories">
         {Object.values(categories).map(category => (
           <Button
             marginRight={12}
