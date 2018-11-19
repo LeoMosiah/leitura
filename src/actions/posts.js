@@ -3,6 +3,7 @@ import { deletePost, generateUID, savePost } from "../utils/api";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 export const ADD_POST = "ADD_POST";
 export const REMOVE_POST = "REMOVE_POST";
+export const TOGGLE_POST = "TOGGLE_POST";
 
 export function receivePosts(posts) {
   return {
@@ -10,14 +11,21 @@ export function receivePosts(posts) {
     posts
   };
 }
-function addPost(post) {
+export function addPost(post) {
   return {
     type: ADD_POST,
     post
   };
 }
 
-function removePost(id) {
+export function togglePost(post) {
+  return {
+    type: TOGGLE_POST,
+    post
+  };
+}
+
+export function removePost(id) {
   return {
     type: REMOVE_POST,
     id

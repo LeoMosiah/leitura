@@ -78,7 +78,7 @@ export const changePost = (id, text) =>
     body: JSON.stringify(text)
   }).then(res => res.json());
 
-export const addComment = comment =>
+export const saveComment = comment =>
   fetch(`${url}/comments/`, {
     method: "POST",
     headers: {
