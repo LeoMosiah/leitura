@@ -13,27 +13,24 @@ const handleRemovePost = (state, action) => {
 };
 
 const addPost = (state, action) => {
-  return {
-    ...state,
-    [action.post.id]: action.post
-  };
+  let clonedState = _.cloneDeep(state);
+  clonedState[action.post.id] = action.post;
+  return clonedState;
 };
 
 const receivePosts = (state, action) => {
-  return {
-    ...state,
-    ...action.posts
-  };
+  let clonedState = _.cloneDeep(state);
+  clonedState = action.posts;
+  return clonedState;
 };
 
 const togglePost = (state, action) => {
-  return {
-    ...state,
-    [action.post.id]: {
-      ...action.post,
-      ["voteScore"]: 1
-    }
-  };
+  let clonedState = _.cloneDeep(state);
+  clonedState[action.post.id].voteScore =
+    action.option === "upVote"
+      ? action.post.voteScore + 1
+      : action.post.voteScore - 1;
+  return clonedState;
 };
 
 export default function posts(state = {}, action) {
