@@ -6,28 +6,46 @@ import {
 } from "../actions/posts";
 import _ from "lodash";
 
+const handleRemovePost = (state, action) => {
+  const clonedState = _.cloneDeep(state);
+  delete clonedState[action.id];
+  return clonedState;
+};
+
+const addPost = (state, action) => {
+  return {
+    ...state,
+    [action.post.id]: action.post
+  };
+};
+
+const receivePosts = (state, action) => {
+  return {
+    ...state,
+    ...action.posts
+  };
+};
+
+const togglePost = (state, action) => {
+  return {
+    ...state,
+    [action.post.id]: {
+      ...action.post,
+      ["voteScore"]: 1
+    }
+  };
+};
+
 export default function posts(state = {}, action) {
   switch (action.type) {
     case RECEIVE_POSTS:
-      return {
-        ...state,
-        ...action.posts
-      };
+      return receivePosts(state, action);
     case ADD_POST:
-      return {
-        ...state,
-        [action.post.id]: action.post
-      };
+      return addPost(state, action);
     case REMOVE_POST:
-      return _.omit(state, [action.id]);
+      return handleRemovePost(state, action);
     case TOGGLE_POST:
-      return {
-        ...state,
-        [action.post.id]: {
-          ...action.post,
-          ["voteScore"]: action.post.voteScore + 1
-        }
-      };
+      return togglePost(state, action);
     default:
       return state;
   }
