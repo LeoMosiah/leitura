@@ -169,13 +169,6 @@ function Blog(props) {
             Sign up
           </Button>
         </Toolbar>
-        <Toolbar variant="dense" className={classes.toolbarSecondary}>
-          {sections.map(section => (
-            <Typography color="inherit" noWrap key={section}>
-              {section}
-            </Typography>
-          ))}
-        </Toolbar>
         <main>
           {/* Main featured post */}
           <Paper className={classes.mainFeaturedPost}>
@@ -213,25 +206,15 @@ function Blog(props) {
             {/* End main content */}
             {/* Sidebar */}
             <Grid item xs={12} md={4}>
-              <Paper elevation={0} className={classes.sidebarAboutBox}>
-                <Typography variant="h6" gutterBottom>
-                  About
-                </Typography>
-                <Typography>
-                  Etiam porta sem malesuada magna mollis euismod. Cras mattis
-                  consectetur purus sit amet fermentum. Aenean lacinia bibendum
-                  nulla sed consectetur.
-                </Typography>
-              </Paper>
               <Typography
                 variant="h6"
                 gutterBottom
                 className={classes.sidebarSection}
               >
-                Archives
+                Categories
               </Typography>
-              {archives.map(archive => (
-                <Typography key={archive}>{archive}</Typography>
+              {sections.map(section => (
+                <Typography key={section}>{section}</Typography>
               ))}
               <Typography
                 variant="h6"
