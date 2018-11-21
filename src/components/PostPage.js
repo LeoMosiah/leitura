@@ -5,17 +5,17 @@ import Pane from "evergreen-ui/esm/layers/src/Pane";
 import { Avatar, IconButton, Paragraph } from "evergreen-ui";
 import Comment from "./Comment";
 import { timestampToDate } from "../utils/helper";
-import { handleDeletePost } from "../actions/posts";
+import { removePost } from "../actions/posts";
 import { deletePost } from "../utils/api";
 
 class PostPage extends Component {
   state = {
     toHome: false
   };
-  handleDelete(id) {
-    const { dispatch } = this.props;
+  async handleDelete(id) {
+    await deletePost(id);
 
-    dispatch(handleDeletePost(id));
+    this.props.dispatch(removePost(id));
 
     this.setState(() => ({
       toHome: true
@@ -60,7 +60,7 @@ class PostPage extends Component {
             icon="trash"
             intent="danger"
             apperence="minimal"
-            onClick={() => deletePost(post.id)}
+            onClick={() => this.handleDelete(post.id)}
           />
         </Pane>
         {postComments.length !== 0 &&
@@ -78,7 +78,6 @@ function mapStateToProps({ authedUser, posts, comments }, props) {
   const postComments = Object.values(comments).filter(
     comment => comment.parentId === post_id
   );
-
   return {
     authedUser,
     post,

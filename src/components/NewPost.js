@@ -6,7 +6,7 @@ import Textarea from "evergreen-ui/esm/textarea/src/Textarea";
 import Select from "evergreen-ui/esm/select/src/Select";
 import TextInput from "evergreen-ui/esm/text-input/src/TextInput";
 import { Button } from "evergreen-ui";
-import { addPost, handleAddPost } from "../actions/posts";
+import { handleAddPost } from "../actions/posts";
 
 class NewPost extends Component {
   state = {

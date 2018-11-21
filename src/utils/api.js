@@ -25,6 +25,16 @@ export const deletePost = id =>
     }
   }).then(res => res.json());
 
+export const deleteComment = id =>
+  fetch(`${url}/comments/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());
+
 export const getCategories = () =>
   fetch(`${url}/categories`, headers)
     .then(res => res.json())

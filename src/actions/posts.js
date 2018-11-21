@@ -18,10 +18,11 @@ export function addPost(post) {
   };
 }
 
-export function togglePost(post) {
+export function togglePost(post, option) {
   return {
     type: TOGGLE_POST,
-    post
+    post,
+    option
   };
 }
 
@@ -45,8 +46,9 @@ export function handleAddPost(post) {
   };
 }
 
-export function handleDeletePost(id) {
-  return dispatch => {
-    return deletePost(id).then(postId => dispatch(removePost(postId)));
+export async function handleDeletePost(id) {
+  return async dispatch => {
+    await deletePost(id);
+    dispatch(removePost(id));
   };
 }

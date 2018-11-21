@@ -111,7 +111,7 @@ describe("Post reducer", function() {
     expect(postsReducer(initialState, removePost(id))).toEqual(expecteState);
   });
 
-  it("should toggle a post to the state", function() {
+  it("should handle  upVote ", function() {
     const initialState = {
       "id 1": {
         id: "id 1",
@@ -158,8 +158,64 @@ describe("Post reducer", function() {
       id: "id 3",
       body: "body 3",
       title: "title 3",
-      voteScore: 1
+      voteScore: 0
     };
-    expect(postsReducer(initialState, togglePost(post))).toEqual(expecteState);
+    expect(postsReducer(initialState, togglePost(post, "upVote"))).toEqual(
+      expecteState
+    );
+  });
+
+  it("should handle  downVote ", function() {
+    const initialState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        voteScore: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        voteScore: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        voteScore: 0
+      }
+    };
+
+    const expecteState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        voteScore: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        voteScore: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        voteScore: -1
+      }
+    };
+
+    const post = {
+      id: "id 3",
+      body: "body 3",
+      title: "title 3",
+      voteScore: 0
+    };
+    expect(postsReducer(initialState, togglePost(post, "downVote"))).toEqual(
+      expecteState
+    );
   });
 });
