@@ -1,50 +1,83 @@
 import React from "react";
-import Paragraph from "evergreen-ui/esm/typography/src/Paragraph";
-import Pane from "evergreen-ui/esm/layers/src/Pane";
-import Heading from "evergreen-ui/esm/typography/src/Heading";
-import { Icon, Pill } from "evergreen-ui";
-import connect from "react-redux/src/connect/connect";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import CommentIcon from "@material-ui/icons/Comment";
+import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { timestampToDate } from "../utils/helper";
+import { Link } from "react-router-dom";
 
+const styles = theme => ({
+  postCard: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 2,
+    border: "1px solid #ccc"
+  },
+  postDetails: {
+    textTransform: "capitalize",
+    marginTop: theme.spacing.unit * 1
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  menu: {
+    float: "right",
+    position: "relative",
+    top: "-1.2rem",
+    left: "2rem"
+  }
+});
 function Post(props) {
-  const { post } = props;
-  const upOrDown = score => (score > 0 ? "thumbs-up" : "thumbs-down");
-  const blueOrRed = score => (score > 0 ? "blue" : "red");
+  const { classes, post } = props;
   return (
-    <Pane marginBottom={10} cursor="pointer" elevation={2} padding={10}>
-      <Link to={`/${post.category}/${post.id}`}>
-        <Heading fontWeight="bold" size={600}>
+    <Card className={classes.postCard}>
+      <CardContent>
+        <IconButton className={classes.menu}>
+          <MoreVertIcon />
+        </IconButton>
+        <Typography gutterBottom variant="h5" component="h2">
           {post.title}
-        </Heading>
-        <Paragraph textTransform="capitalize" marginTop={10}>
-          {post.author}
-        </Paragraph>
-        <Paragraph marginBottom={5}>
-          {timestampToDate(post.timestamp)}
-        </Paragraph>
-      </Link>
-      <Pane display="flex">
-        <Icon color="green" icon="comment" marginTop={8} />
-        <Pill color="green">{post.commentCount}</Pill>
-        <Icon
-          color={blueOrRed(post.voteScore)}
-          icon={upOrDown(post.voteScore)}
-          marginTop={8}
-        />
-        <Pill color={blueOrRed(post.voteScore)}>{post.voteScore}</Pill>
-      </Pane>
-    </Pane>
+        </Typography>
+        <Typography component="p" className={classes.postDetails}>
+          {`${timestampToDate(post.timestamp)} ${post.author}`}
+        </Typography>
+        <Typography component="p" className={classes.postDetails}>
+          {post.body}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <IconButton>
+          <Badge badgeContent={post.commentCount} color="secondary">
+            <CommentIcon color="primary" />
+          </Badge>
+        </IconButton>
+        <IconButton>
+          <Badge badgeContent={post.voteScore} color="secondary">
+            <ThumbsUpDownIcon color="primary" />
+          </Badge>
+        </IconButton>
+        <Link to={`/${post.category}/${post.id}`}>
+          <Button size="small" color="primary">
+            Read More
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
   );
 }
 
-function mapStateToProps({ posts, authedUser }, { id }) {
-  const post = posts[id];
+Post.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
-  return {
-    authedUser,
-    post
-  };
-}
-
-export default connect(mapStateToProps)(Post);
+export default withStyles(styles)(Post);
