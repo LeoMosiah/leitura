@@ -1,35 +1,25 @@
 import React from "react";
 import Main from "./Main";
-import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
-import { withStyles } from "@material-ui/core";
 import Footer from "./Footer";
 import Header from "./Header";
-
-const styles = theme => ({
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  }
-});
+import { connect } from "react-redux";
 
 function Home(props) {
-  const { classes } = props;
+  const { posts, categories } = props;
   return (
-    <React.Fragment>
+    <div>
       <Header />
-      <CssBaseline />
-      <div className={classes.layout}>
-        <Main />
-      </div>
+      <Main posts={posts} categories={categories} />
       <Footer />
-    </React.Fragment>
+    </div>
   );
 }
 
-export default withStyles(styles)(Home);
+function mapStateToProps({ posts, categories }) {
+  return {
+    posts: Object.values(posts).sort((a, b) => b.timestamp - b.timestamp),
+    categories
+  };
+}
+
+export default connect(mapStateToProps)(Home);
