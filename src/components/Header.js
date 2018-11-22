@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   toolbarMain: {
@@ -20,9 +21,11 @@ function Header(props) {
   return (
     <header>
       <Toolbar className={classes.toolbarMain}>
-        <Button variant="outlined" color="primary" size="small">
-          New Post
-        </Button>
+        <Link to="/new">
+          <Button variant="outlined" color="primary" size="small">
+            New Post
+          </Button>
+        </Link>
         <Typography
           component="h2"
           variant="h5"
