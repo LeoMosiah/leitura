@@ -4,12 +4,22 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import Divider from "@material-ui/core/Divider/Divider";
 import { withStyles } from "@material-ui/core";
+import Post from "./Post";
 
 const styles = theme => ({
   mainFeaturedPost: {
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
-    marginBottom: theme.spacing.unit * 4
+    marginBottom: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 3,
+    width: "auto",
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   },
   mainFeaturedPostContent: {
     padding: `${theme.spacing.unit * 6}px`,
@@ -18,33 +28,31 @@ const styles = theme => ({
     }
   },
   mainGrid: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 3,
+    width: "auto",
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: "auto",
+      marginRight: "auto"
+    },
+    textTransform: "capitalize"
   },
   sidebarSection: {
     marginTop: theme.spacing.unit * 3
+  },
+  sidebarDivider: {
+    marginBottom: theme.spacing.unit * 3
   }
 });
-
-const sections = [
-  "Technology",
-  "Design",
-  "Culture",
-  "Business",
-  "Politics",
-  "Opinion",
-  "Science",
-  "Health",
-  "Style",
-  "Travel"
-];
 
 const social = ["GitHub", "Twitter", "Facebook"];
 
 function Main(props) {
-  const { classes } = props;
+  const { classes, posts, categories } = props;
   return (
     <main>
-      {/* Main featured post */}
       <Paper className={classes.mainFeaturedPost}>
         <Grid container>
           <Grid item md={6}>
@@ -66,19 +74,16 @@ function Main(props) {
           </Grid>
         </Grid>
       </Paper>
-      {/* End main featured post */}
-      {/* Sub featured posts */}
-      {/* End sub featured posts */}
       <Grid container spacing={40} className={classes.mainGrid}>
-        {/* Main content */}
         <Grid item xs={12} md={8}>
           <Typography variant="h6" gutterBottom>
-            From the Firehose
+            News
           </Typography>
-          <Divider />
+          <Divider className={classes.sidebarDivider} />
+          {posts.map(post => (
+            <Post key={post.id} post={post} />
+          ))}
         </Grid>
-        {/* End main content */}
-        {/* Sidebar */}
         <Grid item xs={12} md={4}>
           <Typography
             variant="h6"
@@ -87,8 +92,9 @@ function Main(props) {
           >
             Categories
           </Typography>
-          {sections.map(section => (
-            <Typography key={section}>{section}</Typography>
+          <Divider className={classes.sidebarDivider} />
+          {Object.values(categories).map(category => (
+            <Typography key={category.path}>{category.name}</Typography>
           ))}
           <Typography
             variant="h6"
@@ -97,11 +103,11 @@ function Main(props) {
           >
             Social
           </Typography>
+          <Divider className={classes.sidebarDivider} />
           {social.map(network => (
             <Typography key={network}>{network}</Typography>
           ))}
         </Grid>
-        {/* End sidebar */}
       </Grid>
     </main>
   );
