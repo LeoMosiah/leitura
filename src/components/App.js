@@ -4,7 +4,6 @@ import { Route, withRouter } from "react-router-dom";
 import { handleInitialData } from "../actions/shared";
 import Home from "./Home";
 import PostPage from "./PostPage";
-import { Pane } from "evergreen-ui";
 import NewPost from "./NewPost";
 
 class App extends Component {
@@ -13,16 +12,11 @@ class App extends Component {
   }
   render() {
     return (
-      <Pane
-        paddingTop={15}
-        paddingBottom={15}
-        paddingLeft={50}
-        paddingRight={50}
-      >
+      <div>
         <Route exact path="/" component={Home} />
         <Route path="/:category/:post_id" component={PostPage} />
         <Route path="/new" component={NewPost} />
-      </Pane>
+      </div>
     );
   }
 }

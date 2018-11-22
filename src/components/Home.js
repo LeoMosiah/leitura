@@ -1,38 +1,35 @@
 import React from "react";
-import Header from "./Header";
 import Main from "./Main";
-import Pane from "evergreen-ui/esm/layers/src/Pane";
-import Icon from "evergreen-ui/esm/icon/src/Icon";
-import Link from "react-router-dom/es/Link";
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
+import { withStyles } from "@material-ui/core";
+import Footer from "./Footer";
+import Header from "./Header";
 
-function Home() {
+const styles = theme => ({
+  layout: {
+    width: "auto",
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  }
+});
+
+function Home(props) {
+  const { classes } = props;
   return (
-    <Pane>
+    <React.Fragment>
       <Header />
-      <Main />
-      <Pane
-        position="fixed"
-        right="25px"
-        bottom="25px"
-        borderRadius="100%"
-        backgroundColor="green"
-        width="50px"
-        height="50px"
-      >
-        <Link to="/new">
-          <Icon
-            icon="edit"
-            size={30}
-            color="white"
-            position="absolute"
-            transform="translate(-50%, -50%)"
-            top="50%"
-            left="50%"
-          />
-        </Link>
-      </Pane>
-    </Pane>
+      <CssBaseline />
+      <div className={classes.layout}>
+        <Main />
+      </div>
+      <Footer />
+    </React.Fragment>
   );
 }
 
-export default Home;
+export default withStyles(styles)(Home);

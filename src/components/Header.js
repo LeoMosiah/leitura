@@ -1,66 +1,47 @@
 import React from "react";
-import { Button, Dialog, Pane, Paragraph, SearchInput } from "evergreen-ui";
-import SignInForm from "./SingInForm";
-import connect from "react-redux/src/connect/connect";
+import Toolbar from "@material-ui/core/Toolbar/Toolbar";
+import Button from "@material-ui/core/Button/Button";
+import Typography from "@material-ui/core/Typography/Typography";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import { withStyles } from "@material-ui/core";
+
+const styles = theme => ({
+  toolbarMain: {
+    borderBottom: `1px solid ${theme.palette.grey[300]}`
+  },
+  toolbarTitle: {
+    flex: 1
+  }
+});
 
 function Header(props) {
-  const { categories } = props;
+  const { classes } = props;
   return (
-    <Pane>
-      <Pane display="flex">
-        <Pane flex={1}>
-          <Paragraph marginTop={5} size={500} color="dark">
-            Leitura
-          </Paragraph>
-        </Pane>
-        <Pane>
-          <SearchInput placeholder="Search Post" marginRight={6} />
-          <Button
-            marginRight={6}
-            marginBottom={4}
-            appearance="primary"
-            intent="success"
-          >
-            Log In
-          </Button>
-          <Button
-            marginRight={6}
-            marginBottom={4}
-            appearance="primary"
-            intent="warning"
-          >
-            Sign up
-          </Button>
-        </Pane>
-      </Pane>
-      <Pane className="navigation-bar__categories">
-        {Object.values(categories).map(category => (
-          <Button
-            marginRight={12}
-            appearance="minimal"
-            intent="success"
-            className="navigation-bar__category"
-            key={category.name}
-          >
-            {category.name.toUpperCase()}
-          </Button>
-        ))}
-      </Pane>
-      <Dialog
-        isShown={false}
-        title="Sign in to your Leitura's account!"
-        confirmLabel="Custom Label"
-        hasFooter={false}
-      >
-        <SignInForm />
-      </Dialog>
-    </Pane>
+    <header>
+      <Toolbar className={classes.toolbarMain}>
+        <Button variant="outlined" color="primary" size="small">
+          New Post
+        </Button>
+        <Typography
+          component="h2"
+          variant="h5"
+          color="inherit"
+          align="center"
+          noWrap
+          className={classes.toolbarTitle}
+        >
+          Leitura
+        </Typography>
+        <IconButton>
+          <SearchIcon />
+        </IconButton>
+        <Button variant="outlined" color="primary" size="small">
+          Sign up
+        </Button>
+      </Toolbar>
+    </header>
   );
 }
-function mapStateToProps({ categories }) {
-  return {
-    categories
-  };
-}
 
-export default connect(mapStateToProps)(Header);
+export default withStyles(styles)(Header);
