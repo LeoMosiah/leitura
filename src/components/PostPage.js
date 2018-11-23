@@ -11,7 +11,8 @@ import PostDetails from "./PostDetails";
 
 class PostPage extends Component {
   state = {
-    toHome: false
+    toHome: false,
+    comment: ""
   };
   async handleDelete(id) {
     await deletePost(id);
@@ -19,6 +20,11 @@ class PostPage extends Component {
     this.setState(() => ({
       toHome: true
     }));
+  }
+  handleChange(text) {
+    this.setState({
+      comment: text
+    });
   }
   render() {
     const { post, postComments } = this.props;
@@ -30,6 +36,8 @@ class PostPage extends Component {
         postComments={postComments}
         toHome={toHome}
         handleDelete={this.handleDelete}
+        handleChange={this.handleChange}
+        text={this.state.text}
       />
     );
   }
