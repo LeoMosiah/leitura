@@ -9,39 +9,42 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import ThumbsUpIcon from "@material-ui/icons/ThumbUpOutlined";
 import ThumbsDownIcon from "@material-ui/icons/ThumbDownOutlined";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { timestampToDate } from "../utils/helper";
 
 const styles = theme => ({
-  postCard: {
-    width: 500,
-    marginTop: theme.spacing.unit * 2,
+  card: {
     border: "1px solid #ccc"
   },
-  postDetails: {
-    textTransform: "capitalize",
-    marginTop: theme.spacing.unit * 1
+  cardAction: {
+    marginTop: -15
   }
 });
 
 function Comment(props) {
   const { comment, classes } = props;
   return (
-    <Card className={classes.postCard}>
+    <Card className={classes.card}>
       <CardContent>
-        <Typography component="p" className={classes.postDetails}>
+        <Typography component="p">
           {`${timestampToDate(comment.timestamp)} ${comment.author}`}
         </Typography>
-        <Typography component="p" className={classes.postDetails}>
-          {comment.body}
-        </Typography>
+        <Typography component="p">{comment.body}</Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.cardAction}>
         <IconButton>
           <ThumbsUpIcon color="primary" />
         </IconButton>
         <Badge badgeContent={comment.voteScore} color="secondary" />
         <IconButton>
           <ThumbsDownIcon color="secondary" />
+        </IconButton>
+        <IconButton>
+          <DeleteForeverOutlinedIcon color="secondary" />
+        </IconButton>
+        <IconButton>
+          <EditOutlinedIcon color="default" />
         </IconButton>
       </CardActions>
     </Card>
