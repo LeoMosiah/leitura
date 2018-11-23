@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import { timestampToDate } from "../utils/helper";
 import { removePost } from "../actions/posts";
 import { deletePost } from "../utils/api";
+import PostDetails from "./PostDetails";
 
 class PostPage extends Component {
   state = {
@@ -14,9 +15,7 @@ class PostPage extends Component {
   };
   async handleDelete(id) {
     await deletePost(id);
-
     this.props.dispatch(removePost(id));
-
     this.setState(() => ({
       toHome: true
     }));
@@ -26,48 +25,12 @@ class PostPage extends Component {
     const { toHome } = this.state;
     if (toHome) return <Redirect to="/" />;
     return (
-      <Pane
-        paddingTop={15}
-        paddingBottom={15}
-        paddingLeft={270}
-        paddingRight={270}
-      >
-        <Pane>
-          <Pane clearfix>
-            <Pane float="left">
-              <Avatar isSolid name={post.author} size={40} />
-            </Pane>
-            <Pane marginLeft={10} float="left">
-              <Paragraph textTransform="capitalize" color="muted">
-                {post.author}
-              </Paragraph>
-              <Paragraph color="muted">
-                {timestampToDate(post.timestamp)}
-              </Paragraph>
-            </Pane>
-          </Pane>
-          <h2>{post.title}</h2>
-        </Pane>
-        <Pane overflow="hidden">
-          <img
-            src="https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=1080&fit=max"
-            alt="post image"
-          />
-        </Pane>
-        <Pane marginTop={20}>
-          <Paragraph>{post.body}</Paragraph>
-          <IconButton
-            icon="trash"
-            intent="danger"
-            apperence="minimal"
-            onClick={() => this.handleDelete(post.id)}
-          />
-        </Pane>
-        {postComments.length !== 0 &&
-          postComments.map(comment => (
-            <Comment key={comment.id} comment={comment} />
-          ))}
-      </Pane>
+      <PostDetails
+        post={post}
+        postComments={postComments}
+        toHome={toHome}
+        handleDelete={this.handleDelete}
+      />
     );
   }
 }
