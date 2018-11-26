@@ -5,20 +5,21 @@ import Header from "./Header";
 import { connect } from "react-redux";
 
 function Home(props) {
-  const { posts, categories } = props;
+  const { posts, categories, authedUser } = props;
   return (
     <div>
       <Header />
-      <Main posts={posts} categories={categories} />
+      <Main posts={posts} categories={categories} authedUser={authedUser} />
       <Footer />
     </div>
   );
 }
 
-function mapStateToProps({ posts, categories }) {
+function mapStateToProps({ posts, categories, authedUser }) {
   return {
     posts: Object.values(posts).sort((a, b) => b.timestamp - b.timestamp),
-    categories
+    categories,
+    authedUser
   };
 }
 

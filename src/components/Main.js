@@ -50,7 +50,7 @@ const styles = theme => ({
 const social = ["GitHub", "Twitter", "Facebook"];
 
 function Main(props) {
-  const { classes, posts, categories } = props;
+  const { classes, posts, categories, authedUser } = props;
   return (
     <main>
       <Paper className={classes.mainFeaturedPost}>
@@ -81,7 +81,7 @@ function Main(props) {
           </Typography>
           <Divider className={classes.sidebarDivider} />
           {posts.map(post => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} authedUser={authedUser} />
           ))}
         </Grid>
         <Grid item xs={12} md={4}>

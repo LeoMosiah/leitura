@@ -1,8 +1,6 @@
 import { tranformArrayIntoMap } from "./helper";
 import dotev from "dotenv";
 
-dotev.config();
-
 let token = localStorage.token;
 if (!token)
   token = localStorage.token = Math.random()
@@ -99,7 +97,7 @@ export const saveComment = comment =>
     body: JSON.stringify(comment)
   }).then(res => res.json());
 
-export const voteComment = id =>
+export const voteComment = (id, option) =>
   fetch(`${url}/comments/${id}`, {
     method: "POST",
     headers: {
@@ -107,7 +105,7 @@ export const voteComment = id =>
       Authorization: token,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ option: "upVote" })
+    body: JSON.stringify({ option: option })
   }).then(res => res.json());
 
 export const changeComment = (id, text) =>

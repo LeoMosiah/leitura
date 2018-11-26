@@ -1,10 +1,7 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
-import Divider from "@material-ui/core/Divider/Divider";
 import { withStyles } from "@material-ui/core";
-import Post from "./Post";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Comment from "./Comment";
 import TextField from "@material-ui/core/TextField";
@@ -63,8 +60,7 @@ const styles = theme => ({
 });
 
 function PostDetails(props) {
-  const { classes, post, postComments, handleChange } = props;
-
+  const { classes, post, postComments, handleChange, handleSubmit } = props;
   return (
     <React.Fragment>
       <Card className={classes.post}>
@@ -92,7 +88,12 @@ function PostDetails(props) {
       <div className={classes.commentsCard}>
         {postComments.length !== 0 &&
           postComments.map(comment => (
-            <Comment key={comment.id} comment={comment} />
+            <Comment
+              key={comment.id}
+              comment={comment}
+              handleDelete={props.handleDelete}
+              handleVote={props.handleVote}
+            />
           ))}
       </div>
       <div className={classes.commentsForm}>
@@ -102,6 +103,7 @@ function PostDetails(props) {
           multiline
           fullWidth
           className={classes.textField}
+          value={props.comment}
           margin="normal"
           variant="outlined"
           onChange={event => handleChange(event.target.value)}
@@ -110,7 +112,8 @@ function PostDetails(props) {
           variant="outlined"
           color="primary"
           className={classes.button}
-          onClick={() => console.log(props.text)}
+          onClick={event => handleSubmit(event)}
+          disabled={!props.comment}
         >
           Submit
         </Button>

@@ -2,8 +2,8 @@ import { generateUID, saveComment, deleteComment } from "../utils/api";
 
 export const RECEIVE_COMMENTS = "RECEIVE_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
-export const REMOVE_COMMENT = "REMOVE_POST";
-export const TOGGLE_COMMENT = "TOGGLE_POST";
+export const REMOVE_COMMENT = "REMOVE_COMMENT";
+export const TOGGLE_COMMENT = "TOGGLE_COMMENT";
 
 export function receiveComments(comments) {
   return {
@@ -41,7 +41,8 @@ export function handleAddComment(comment) {
       ...comment,
       author: authedUser,
       id: generateUID(),
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      voteScore: 0
     };
     return saveComment(newComment).then(comment =>
       dispatch(addComment(comment))

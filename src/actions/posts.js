@@ -40,9 +40,11 @@ export function handleAddPost(post) {
       ...post,
       author: authedUser,
       id: generateUID(),
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      voteScore: 0,
+      commentCount: 0
     };
-    return savePost(newPost).then(post => dispatch(addPost(post)));
+    return savePost(newPost).then(post => dispatch(addPost(newPost)));
   };
 }
 
