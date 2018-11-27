@@ -1,5 +1,4 @@
 import { tranformArrayIntoMap } from "./helper";
-import dotev from "dotenv";
 
 let token = localStorage.token;
 if (!token)
@@ -41,17 +40,8 @@ export const getCategories = () =>
 export const getPosts = () =>
   fetch(`${url}/posts`, headers).then(res => res.json());
 
-export const getPostByCategory = category =>
-  fetch(`${url}/${category}/posts`, headers).then(res => res.json());
-
-export const getPostById = id =>
-  fetch(`${url}/posts/${id}`, headers).then(res => res.json());
-
 export const getComments = id =>
   fetch(`${url}/posts/${id}/comments`, headers).then(res => res.json());
-
-export const getComment = id =>
-  fetch(`${url}/comments/${id}`, headers).then(res => res.json());
 
 export const savePost = post =>
   fetch(`${url}/posts`, {
@@ -121,14 +111,6 @@ export const changeComment = (id, text) =>
       body: text
     })
   }).then(res => res.json());
-
-export const generateUID = () =>
-  Math.random()
-    .toString(36)
-    .substring(2, 15) +
-  Math.random()
-    .toString(36)
-    .substring(2, 15);
 
 export async function getInitialData() {
   const postsArray = await getPosts();

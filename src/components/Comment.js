@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 function Comment(props) {
-  const { comment, classes, handleDelete, handleVote } = props;
+  const { comment, classes, handleDelete, handleVoteComment } = props;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -33,13 +33,13 @@ function Comment(props) {
         <Typography component="p">{comment.body}</Typography>
       </CardContent>
       <CardActions className={classes.cardAction}>
-        <IconButton onClick={() => handleVote(comment, "upVote")}>
+        <IconButton onClick={() => handleVoteComment(comment, "upVote")}>
           <ThumbsUpIcon color="primary" />
         </IconButton>
         <IconButton>
           <Badge badgeContent={comment.voteScore} color="secondary" />
         </IconButton>
-        <IconButton onClick={() => handleVote(comment, "downVote")}>
+        <IconButton onClick={() => handleVoteComment(comment, "downVote")}>
           <ThumbsDownIcon color="secondary" />
         </IconButton>
         <IconButton onClick={() => handleDelete(comment.id)}>

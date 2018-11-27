@@ -1,37 +1,22 @@
-import {
-  RECEIVE_POSTS,
-  ADD_POST,
-  REMOVE_POST,
-  TOGGLE_POST
-} from "../actions/posts";
 import _ from "lodash";
-
-const handleRemovePost = (state, action) => {
-  const clonedState = _.cloneDeep(state);
-  delete clonedState[action.id];
-  return clonedState;
-};
-
-const addPost = (state, action) => {
-  let clonedState = _.cloneDeep(state);
-  clonedState[action.post.id] = action.post;
-  return clonedState;
-};
-
-const receivePosts = (state, action) => {
-  let clonedState = _.cloneDeep(state);
-  clonedState = action.posts;
-  return clonedState;
-};
-
-const togglePost = (state, action) => {
-  let clonedState = _.cloneDeep(state);
-  clonedState[action.post.id].voteScore =
-    action.option === "upVote"
-      ? action.post.voteScore + 1
-      : action.post.voteScore - 1;
-  return clonedState;
-};
+import {
+  ADD_POST,
+  DECREMENT_VOTESCORE,
+  INCREMENT_VOTESCORE,
+  RECEIVE_POSTS,
+  REMOVE_POST,
+  TOGGLE_POST,
+  UPDATE_POST
+} from "../actions/variables";
+import {
+  addPost,
+  decrementVotescore,
+  handleRemovePost,
+  incrementVotescore,
+  receivePosts,
+  togglePost,
+  updatePost
+} from "./handlers";
 
 export default function posts(state = {}, action) {
   switch (action.type) {
@@ -43,6 +28,12 @@ export default function posts(state = {}, action) {
       return handleRemovePost(state, action);
     case TOGGLE_POST:
       return togglePost(state, action);
+    case INCREMENT_VOTESCORE:
+      return incrementVotescore(state, action);
+    case DECREMENT_VOTESCORE:
+      return decrementVotescore(state, action);
+    case UPDATE_POST:
+      return updatePost(state, action);
     default:
       return state;
   }

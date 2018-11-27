@@ -13,13 +13,13 @@ import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { timestampToDate } from "../utils/helper";
 import { Link } from "react-router-dom";
-import Menu from "@material-ui/core/Menu/Menu";
-import MenuItem from "evergreen-ui/esm/menu/src/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import Menu from "@material-ui/core/Menu";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import EditOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import MenuList from "@material-ui/core/MenuList/MenuList";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 
 const styles = theme => ({
   postCard: {
@@ -39,20 +39,10 @@ const styles = theme => ({
     position: "relative",
     top: "-1.2rem",
     left: "2rem"
-  },
-  menuItem: {
-    "&:focus": {
-      backgroundColor: theme.palette.primary.main,
-      "& $primary, & $icon": {
-        color: theme.palette.common.white
-      }
-    }
-  },
-  primary: {},
-  icon: {}
+  }
 });
 
-class Post extends Component<{}> {
+class Post extends Component {
   state = {
     anchorEl: null
   };
@@ -63,7 +53,7 @@ class Post extends Component<{}> {
     this.setState({ anchorEl: null });
   };
   render() {
-    const { classes, post, authedUser } = this.props;
+    const { classes, post, authedUser, handleDelete } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -108,40 +98,38 @@ class Post extends Component<{}> {
             </Button>
           </Link>
         </CardActions>
-        <MenuList
+        <Menu
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem className={classes.menuItem}>
-            <ListItemIcon className={classes.icon}>
-              <EditOutlinedIcon color="default" /> />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.primary }}
-              inset
-              primary="Edit your post"
-            />
-          </MenuItem>
-          <MenuItem className={classes.menuItem}>
-            <ListItemIcon className={classes.icon}>
-              <DeleteForeverOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.primary }}
-              inset
-              primary="Delete your post"
-            />
-          </MenuItem>
-        </MenuList>
+          <MenuList>
+            <MenuItem>
+              <ListItemIcon>
+                <EditOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText inset primary="Edit your post" />
+            </MenuItem>
+            <MenuItem>
+              <ListItemIcon>
+                <DeleteForeverOutlinedIcon
+                  onClick={() => handleDelete(post.id)}
+                />
+              </ListItemIcon>
+              <ListItemText inset primary="Delete your post" />
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Card>
     );
   }
 }
 
 Post.propTypes = {
-  classes: PropTypes.object.isRequired
+  authedUser: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Post);

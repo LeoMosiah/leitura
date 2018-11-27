@@ -5,6 +5,7 @@ import { handleInitialData } from "../actions/shared";
 import Home from "./Home";
 import PostPage from "./PostPage";
 import NewPost from "./NewPost";
+import * as PropTypes from "prop-types";
 
 class App extends Component {
   async componentDidMount() {
@@ -14,7 +15,7 @@ class App extends Component {
     return (
       <div>
         <Route exact path="/" component={Home} />
-        <Route path="/:category/:post_id" component={PostPage} />
+        <Route exact path="/:category/:post_id" component={PostPage} />
         <Route path="/new" component={NewPost} />
       </div>
     );
@@ -22,3 +23,7 @@ class App extends Component {
 }
 
 export default withRouter(connect()(App));
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};

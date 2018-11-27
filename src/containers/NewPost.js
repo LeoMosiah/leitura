@@ -13,16 +13,17 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import * as ReactDOM from "react-dom";
 import Card from "@material-ui/core/es/Card/Card";
 import Typography from "@material-ui/core/Typography/Typography";
+import * as PropTypes from "prop-types";
 
 const styles = theme => ({
   layout: {
     textAlign: "center",
+    border: "1px solid #ccc",
     width: 800,
-    backgroundColor: "#f9f9f9",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: theme.spacing.unit * 3,
-    padding: theme.spacing.unit
+    marginTop: theme.spacing.unit * 20,
+    padding: theme.spacing.unit * 5
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -160,3 +161,8 @@ class NewPost extends Component {
 }
 
 export default connect()(withStyles(styles)(NewPost));
+
+NewPost.propTypes = {
+  classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
+};

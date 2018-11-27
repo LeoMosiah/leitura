@@ -1,9 +1,14 @@
-import { deletePost, generateUID, savePost } from "../utils/api";
-
-export const RECEIVE_POSTS = "RECEIVE_POSTS";
-export const ADD_POST = "ADD_POST";
-export const REMOVE_POST = "REMOVE_POST";
-export const TOGGLE_POST = "TOGGLE_POST";
+import { savePost } from "../utils/api";
+import { generateUUID } from "../utils/helper";
+import {
+  ADD_POST,
+  DECREMENT_VOTESCORE,
+  INCREMENT_VOTESCORE,
+  RECEIVE_POSTS,
+  REMOVE_POST,
+  TOGGLE_POST,
+  UPDATE_POST
+} from "./variables";
 
 export function receivePosts(posts) {
   return {
@@ -33,13 +38,27 @@ export function removePost(id) {
   };
 }
 
+export function incrementVotescore(post) {
+  return {
+    type: INCREMENT_VOTESCORE,
+    post
+  };
+}
+
+export function decrementVotescore(post) {
+  return {
+    type: DECREMENT_VOTESCORE,
+    post
+  };
+}
+
 export function handleAddPost(post) {
   return (dispatch, getState) => {
     const { authedUser } = getState();
     const newPost = {
       ...post,
       author: authedUser,
-      id: generateUID(),
+      id: generateUUID(),
       timestamp: Date.now(),
       voteScore: 0,
       commentCount: 0
@@ -48,9 +67,9 @@ export function handleAddPost(post) {
   };
 }
 
-export async function handleDeletePost(id) {
-  return async dispatch => {
-    await deletePost(id);
-    dispatch(removePost(id));
+export function updatePost(post) {
+  return {
+    type: UPDATE_POST,
+    post
   };
 }

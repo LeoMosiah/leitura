@@ -1,18 +1,31 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import connect from "react-redux/src/connect/connect";
-import { deleteComment, saveComment, voteComment } from "../utils/api";
-import PostDetails from "./PostDetails";
+import {
+  deleteComment,
+  saveComment,
+  voteComment,
+  votePost
+} from "../utils/api";
+import PostDetails from "../components/PostDetails";
 import { generateUUID } from "../utils/helper";
+import {
+  decrementVotescore,
+  incrementVotescore,
+  togglePost
+} from "../actions/posts";
 import { addComment, removeComment, toggleComment } from "../actions/comments";
+import * as PropTypes from "prop-types";
 
 class PostPage extends Component {
   state = {
     body: ""
   };
   handleDelete = async id => {
-    this.props.dispatch(removeComment(id));
+    const { post, authedUser, dispatch } = this.props;
+    dispatch(removeComment(id));
     await deleteComment(id);
+    dispatch(decrementVotescore(post));
   };
   handleChange = string => {
     let text = string;
@@ -33,17 +46,22 @@ class PostPage extends Component {
       voteScore: 0
     };
     dispatch(addComment(comment));
+    dispatch(incrementVotescore(post));
     this.setState({
       body: ""
     });
     await saveComment(comment);
   };
-  handleVote = async (comment, option) => {
+  handleVoteComment = async (comment, option) => {
     this.props.dispatch(toggleComment(comment, option));
     await voteComment(comment.id, option);
   };
+  handleVotePost = async (post, option) => {
+    this.props.dispatch(togglePost(post, option));
+    await votePost(post.id, option);
+  };
   render() {
-    const { post, postComments } = this.props;
+    const { post, postComments, authedUser } = this.props;
     const { toHome, body } = this.state;
     if (toHome) return <Redirect to="/" />;
     return (
@@ -54,8 +72,10 @@ class PostPage extends Component {
         handleDelete={this.handleDelete}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        handleVote={this.handleVote}
+        handleVoteComment={this.handleVoteComment}
+        handleVotePost={this.handleVotePost}
         comment={body}
+        authedUser={authedUser}
       />
     );
   }
@@ -75,3 +95,10 @@ function mapStateToProps({ authedUser, posts, comments }, props) {
 }
 
 export default connect(mapStateToProps)(PostPage);
+
+PostPage.propTypes = {
+  authedUser: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+  postComments: PropTypes.object.isRequired
+};

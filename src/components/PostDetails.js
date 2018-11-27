@@ -2,10 +2,17 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography/Typography";
 import { withStyles } from "@material-ui/core";
+import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Comment from "./Comment";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import ThumbsUpIcon from "@material-ui/icons/ThumbUpOutlined";
+import ThumbsDownIcon from "@material-ui/icons/ThumbDownOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import * as PropTypes from "prop-types";
 
 const styles = theme => ({
   post: {
@@ -16,8 +23,8 @@ const styles = theme => ({
     marginRight: "auto"
   },
   postHeader: {
-    overflow: "auto",
-    margin: theme.spacing.unit * 3
+    margin: theme.spacing.unit * 3,
+    overflow: "hidden"
   },
   postHeaderAvatar: {
     float: "left",
@@ -60,7 +67,15 @@ const styles = theme => ({
 });
 
 function PostDetails(props) {
-  const { classes, post, postComments, handleChange, handleSubmit } = props;
+  const {
+    classes,
+    post,
+    postComments,
+    handleChange,
+    handleSubmit,
+    handleVotePost,
+    authedUser
+  } = props;
   return (
     <React.Fragment>
       <Card className={classes.post}>
@@ -73,12 +88,34 @@ function PostDetails(props) {
             <Typography>{post.timestamp}</Typography>
           </div>
         </div>
-        <Card className={classes.postMain}>
+        <div className={classes.postMain}>
           <Typography variant="h5" component="h2">
             {post.title}
           </Typography>
           <Typography>{post.body}</Typography>
-        </Card>
+        </div>
+        <CardActions>
+          <IconButton>
+            <ThumbsUpIcon
+              color="primary"
+              onClick={() => handleVotePost(post, "upVote")}
+            />
+          </IconButton>
+          <IconButton>
+            <Badge badgeContent={post.voteScore} color="secondary" />
+          </IconButton>
+          <IconButton>
+            <ThumbsDownIcon
+              color="secondary"
+              onClick={() => handleVotePost(post, "downVote")}
+            />
+          </IconButton>
+          {authedUser === post.author && (
+            <IconButton>
+              <EditOutlinedIcon color="default" />
+            </IconButton>
+          )}
+        </CardActions>
       </Card>
       <Typography
         className={classes.commentsCard}
@@ -92,7 +129,7 @@ function PostDetails(props) {
               key={comment.id}
               comment={comment}
               handleDelete={props.handleDelete}
-              handleVote={props.handleVote}
+              handleVoteComment={props.handleVoteComment}
             />
           ))}
       </div>
@@ -123,3 +160,16 @@ function PostDetails(props) {
 }
 
 export default withStyles(styles)(PostDetails);
+
+PostDetails.propTypes = {
+  authedUser: PropTypes.any,
+  classes: PropTypes.object.isRequired,
+  comment: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleVoteComment: PropTypes.func.isRequired,
+  handleVotePost: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+  postComments: PropTypes.object.isRequired
+};

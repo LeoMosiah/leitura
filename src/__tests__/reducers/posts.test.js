@@ -3,7 +3,10 @@ import {
   receivePosts,
   addPost,
   removePost,
-  togglePost
+  togglePost,
+  incrementVotescore,
+  decrementVotescore,
+  updatePost
 } from "../../actions/posts";
 
 describe("Post reducer", function() {
@@ -217,5 +220,167 @@ describe("Post reducer", function() {
     expect(postsReducer(initialState, togglePost(post, "downVote"))).toEqual(
       expecteState
     );
+  });
+
+  it("should handle  add comment ", function() {
+    const initialState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        commentCount: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const expecteState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        commentCount: 1
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const post = {
+      id: "id 1",
+      body: "body 1",
+      title: "title 1",
+      commentCount: 0
+    };
+
+    expect(postsReducer(initialState, incrementVotescore(post))).toEqual(
+      expecteState
+    );
+  });
+  it("should handle  add comment ", function() {
+    const initialState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        commentCount: 1
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const expecteState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        commentCount: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const post = {
+      id: "id 1",
+      body: "body 1",
+      title: "title 1",
+      commentCount: 1
+    };
+
+    expect(postsReducer(initialState, decrementVotescore(post))).toEqual(
+      expecteState
+    );
+  });
+
+  it("should handle  update a post ", function() {
+    const initialState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        commentCount: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const expecteState = {
+      "id 1": {
+        id: "id 1",
+        body: "new body 1",
+        title: "new title 1",
+        commentCount: 0
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        commentCount: 0
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        commentCount: 0
+      }
+    };
+
+    const post = {
+      id: "id 1",
+      body: "new body 1",
+      title: "new title 1",
+      commentCount: 0
+    };
+
+    expect(postsReducer(initialState, updatePost(post))).toEqual(expecteState);
   });
 });

@@ -3,8 +3,11 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import Divider from "@material-ui/core/Divider/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Reorder from "@material-ui/icons/ReorderOutlined";
 import { withStyles } from "@material-ui/core";
 import Post from "./Post";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   mainFeaturedPost: {
@@ -39,6 +42,11 @@ const styles = theme => ({
     },
     textTransform: "capitalize"
   },
+  newsSection: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: -10
+  },
   sidebarSection: {
     marginTop: theme.spacing.unit * 3
   },
@@ -50,7 +58,7 @@ const styles = theme => ({
 const social = ["GitHub", "Twitter", "Facebook"];
 
 function Main(props) {
-  const { classes, posts, categories, authedUser } = props;
+  const { classes, posts, categories, authedUser, handleDelete } = props;
   return (
     <main>
       <Paper className={classes.mainFeaturedPost}>
@@ -76,12 +84,22 @@ function Main(props) {
       </Paper>
       <Grid container spacing={40} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-          <Typography variant="h6" gutterBottom>
-            News
-          </Typography>
+          <div className={classes.newsSection}>
+            <Typography variant="h6" gutterBottom>
+              News
+            </Typography>
+            <IconButton>
+              <Reorder color="default" />
+            </IconButton>
+          </div>
           <Divider className={classes.sidebarDivider} />
           {posts.map(post => (
-            <Post key={post.id} post={post} authedUser={authedUser} />
+            <Post
+              key={post.id}
+              post={post}
+              authedUser={authedUser}
+              handleDelete={handleDelete}
+            />
           ))}
         </Grid>
         <Grid item xs={12} md={4}>
@@ -94,7 +112,9 @@ function Main(props) {
           </Typography>
           <Divider className={classes.sidebarDivider} />
           {Object.values(categories).map(category => (
-            <Typography key={category.path}>{category.name}</Typography>
+            <Link to={`/${category.path}`} key={category.path}>
+              <Typography>{category.name}</Typography>
+            </Link>
           ))}
           <Typography
             variant="h6"

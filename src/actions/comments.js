@@ -1,9 +1,12 @@
-import { generateUID, saveComment, deleteComment } from "../utils/api";
-
-export const RECEIVE_COMMENTS = "RECEIVE_COMMENTS";
-export const ADD_COMMENT = "ADD_COMMENT";
-export const REMOVE_COMMENT = "REMOVE_COMMENT";
-export const TOGGLE_COMMENT = "TOGGLE_COMMENT";
+import { saveComment, deleteComment } from "../utils/api";
+import { generateUUID } from "../utils/helper";
+import {
+  ADD_COMMENT,
+  RECEIVE_COMMENTS,
+  REMOVE_COMMENT,
+  TOGGLE_COMMENT,
+  UPDATE_COMMENT
+} from "./variables";
 
 export function receiveComments(comments) {
   return {
@@ -40,7 +43,7 @@ export function handleAddComment(comment) {
     const newComment = {
       ...comment,
       author: authedUser,
-      id: generateUID(),
+      id: generateUUID(),
       timestamp: Date.now(),
       voteScore: 0
     };
@@ -50,8 +53,9 @@ export function handleAddComment(comment) {
   };
 }
 
-export function handleDeleteComment(id) {
-  return dispatch => {
-    return deleteComment(id).then(id => dispatch(removeComment(id)));
+export function updateComment(comment) {
+  return {
+    type: UPDATE_COMMENT,
+    comment
   };
 }
