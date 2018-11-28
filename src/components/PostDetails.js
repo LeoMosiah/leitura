@@ -2,6 +2,7 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography/Typography";
 import { withStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Comment from "./Comment";
@@ -12,59 +13,9 @@ import Badge from "@material-ui/core/Badge";
 import ThumbsUpIcon from "@material-ui/icons/ThumbUpOutlined";
 import ThumbsDownIcon from "@material-ui/icons/ThumbDownOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import * as PropTypes from "prop-types";
-
-const styles = theme => ({
-  post: {
-    margin: theme.spacing.unit * 3,
-    border: "1px solid #ccc",
-    width: 800,
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  postHeader: {
-    margin: theme.spacing.unit * 3,
-    overflow: "hidden"
-  },
-  postHeaderAvatar: {
-    float: "left",
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  postHeaderDetails: {
-    float: "left",
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  postMain: {
-    padding: theme.spacing.unit * 3.5,
-    marginTop: -theme.spacing.unit * 4
-  },
-  commentsCard: {
-    width: 800,
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  commentsTitle: {
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  commentsForm: {
-    width: 800,
-    marginLeft: "auto",
-    marginRight: "auto",
-    textAlign: "center"
-  },
-  textField: {
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  button: {
-    width: 400,
-    fontSize: 18,
-    letterSpacing: 5
-  }
-});
+import { styles } from "./styles/postDetails";
 
 function PostDetails(props) {
   const {
@@ -74,7 +25,8 @@ function PostDetails(props) {
     handleChange,
     handleSubmit,
     handleVotePost,
-    authedUser
+    authedUser,
+    handleDeletePost
   } = props;
   return (
     <React.Fragment>
@@ -112,7 +64,17 @@ function PostDetails(props) {
           </IconButton>
           {authedUser === post.author && (
             <IconButton>
-              <EditOutlinedIcon color="default" />
+              <Link to={`/post/edit/${post.id}`}>
+                <EditOutlinedIcon color="default" />
+              </Link>
+            </IconButton>
+          )}
+          {authedUser === post.author && (
+            <IconButton>
+              <DeleteForeverOutlinedIcon
+                color="secondary"
+                onClick={event => handleDeletePost(event, post.id)}
+              />
             </IconButton>
           )}
         </CardActions>

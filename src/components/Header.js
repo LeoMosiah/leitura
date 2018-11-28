@@ -6,15 +6,7 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
-const styles = theme => ({
-  toolbarMain: {
-    borderBottom: `1px solid ${theme.palette.grey[300]}`
-  },
-  toolbarTitle: {
-    flex: 1
-  }
-});
+import { styles } from "./styles/headerStyles";
 
 function Header(props) {
   const { classes } = props;
@@ -39,9 +31,11 @@ function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button variant="outlined" color="primary" size="small">
-          Sign up
-        </Button>
+        <Link to="/signIn">
+          <Button variant="outlined" color="primary" size="small">
+            Sign up
+          </Button>
+        </Link>
       </Toolbar>
     </header>
   );

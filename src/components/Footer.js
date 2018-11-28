@@ -1,14 +1,7 @@
 import Typography from "@material-ui/core/Typography/Typography";
 import React from "react";
 import { withStyles } from "@material-ui/core";
-
-const styles = theme => ({
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    marginTop: theme.spacing.unit * 8,
-    padding: `${theme.spacing.unit * 6}px 0`
-  }
-});
+import { styles } from "./styles/footerStyle";
 
 function Footer(props) {
   const { classes } = props;

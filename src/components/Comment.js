@@ -12,15 +12,7 @@ import ThumbsDownIcon from "@material-ui/icons/ThumbDownOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { timestampToDate } from "../utils/helper";
-
-const styles = theme => ({
-  card: {
-    border: "1px solid #ccc"
-  },
-  cardAction: {
-    marginTop: -15
-  }
-});
+import { styles } from "./styles/commentStyle";
 
 function Comment(props) {
   const { comment, classes, handleDelete, handleVoteComment } = props;

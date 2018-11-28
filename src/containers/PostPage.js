@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import connect from "react-redux/src/connect/connect";
+import { removePost } from "../actions/posts";
 import {
   deleteComment,
   saveComment,
   voteComment,
-  votePost
+  votePost,
+  deletePost,
+  changeComment
 } from "../utils/api";
 import PostDetails from "../components/PostDetails";
 import { generateUUID } from "../utils/helper";
@@ -14,7 +17,12 @@ import {
   incrementVotescore,
   togglePost
 } from "../actions/posts";
-import { addComment, removeComment, toggleComment } from "../actions/comments";
+import {
+  addComment,
+  removeComment,
+  toggleComment,
+  updateComment
+} from "../actions/comments";
 import * as PropTypes from "prop-types";
 
 class PostPage extends Component {
@@ -60,6 +68,15 @@ class PostPage extends Component {
     this.props.dispatch(togglePost(post, option));
     await votePost(post.id, option);
   };
+  handleDeletePost = async (e, id) => {
+    e.preventDefault();
+    this.props.dispatch(removePost(id));
+    await deletePost(id);
+  };
+  handleUpdateComment = async comment => {
+    this.props.dispatch(updateComment(comment));
+    await changeComment(comment.id, comment.body);
+  };
   render() {
     const { post, postComments, authedUser } = this.props;
     const { toHome, body } = this.state;
@@ -76,6 +93,8 @@ class PostPage extends Component {
         handleVotePost={this.handleVotePost}
         comment={body}
         authedUser={authedUser}
+        handleDeletePost={this.handleDeletePost}
+        handleUpdateComment={this.handleUpdateComment}
       />
     );
   }

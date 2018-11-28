@@ -14,33 +14,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { timestampToDate } from "../utils/helper";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
-import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-
-const styles = theme => ({
-  postCard: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 2,
-    border: "1px solid #ccc"
-  },
-  postDetails: {
-    textTransform: "capitalize",
-    marginTop: theme.spacing.unit * 1
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  menu: {
-    float: "right",
-    position: "relative",
-    top: "-1.2rem",
-    left: "2rem"
-  }
-});
+import { styles } from "./styles/postStyles";
 
 class Post extends Component {
   state = {
@@ -56,7 +31,6 @@ class Post extends Component {
     const { classes, post, authedUser, handleDelete } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
     return (
       <Card className={classes.postCard}>
         <CardContent>
@@ -104,22 +78,12 @@ class Post extends Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuList>
-            <MenuItem>
-              <ListItemIcon>
-                <EditOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Edit your post" />
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <DeleteForeverOutlinedIcon
-                  onClick={() => handleDelete(post.id)}
-                />
-              </ListItemIcon>
-              <ListItemText inset primary="Delete your post" />
-            </MenuItem>
-          </MenuList>
+          <Link to={`/post/edit/${post.id}`}>
+            <MenuItem>Edit your post</MenuItem>
+          </Link>
+          <MenuItem onClick={event => handleDelete(event, post.id)}>
+            Delete your post
+          </MenuItem>
         </Menu>
       </Card>
     );

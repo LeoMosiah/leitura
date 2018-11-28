@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import SignIn from "../components/SignIn";
 import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
 import { deletePost } from "../utils/api";
 import { removePost } from "../actions/posts";
 
 class Home extends Component {
-  handleDelete = async id => {
+  handleDelete = async (e, id) => {
+    e.preventDefault();
     this.props.dispatch(removePost(id));
     await deletePost(id);
   };
@@ -21,7 +23,7 @@ class Home extends Component {
           posts={posts}
           categories={categories}
           authedUser={authedUser}
-          hadleDelete={this.handleDelete}
+          handleDelete={this.handleDelete}
         />
         <Footer />
       </div>
@@ -42,5 +44,5 @@ export default connect(mapStateToProps)(Home);
 Home.propTypes = {
   authedUser: PropTypes.string.isRequired,
   categories: PropTypes.object.isRequired,
-  posts: PropTypes.object.isRequired
+  posts: PropTypes.array.isRequired
 };

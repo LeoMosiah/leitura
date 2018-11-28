@@ -1,4 +1,4 @@
-import { saveComment, deleteComment } from "../utils/api";
+import { saveComment } from "../utils/api";
 import { generateUUID } from "../utils/helper";
 import {
   ADD_COMMENT,
