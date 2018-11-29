@@ -54,7 +54,7 @@ export const savePost = post =>
     body: JSON.stringify(post)
   }).then(res => res.json());
 
-export const votePost = id =>
+export const votePost = (id, option) =>
   fetch(`${url}/posts/${id}`, {
     method: "POST",
     headers: {
@@ -62,7 +62,7 @@ export const votePost = id =>
       Authorization: token,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ option: "upVote" })
+    body: JSON.stringify({ option: option })
   }).then(res => res.json());
 
 export const changePost = (id, text) =>

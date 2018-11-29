@@ -2,8 +2,8 @@ import { savePost } from "../utils/api";
 import { generateUUID } from "../utils/helper";
 import {
   ADD_POST,
-  DECREMENT_VOTESCORE,
-  INCREMENT_VOTESCORE,
+  DECREMENT_COMMENTCOUNT,
+  INCREMENT_COMMENTCOUNT,
   RECEIVE_POSTS,
   REMOVE_POST,
   TOGGLE_POST,
@@ -38,16 +38,16 @@ export function removePost(id) {
   };
 }
 
-export function incrementVotescore(post) {
+export function incrementCommentcount(post) {
   return {
-    type: INCREMENT_VOTESCORE,
+    type: INCREMENT_COMMENTCOUNT,
     post
   };
 }
 
-export function decrementVotescore(post) {
+export function decrementCommentcount(post) {
   return {
-    type: DECREMENT_VOTESCORE,
+    type: DECREMENT_COMMENTCOUNT,
     post
   };
 }

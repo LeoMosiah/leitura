@@ -27,12 +27,12 @@ export const togglePost = (state, action) => {
   return clonedState;
 };
 
-export const incrementVotescore = (state, action) => {
+export const incrementCommentcount = (state, action) => {
   let clonedState = _.cloneDeep(state);
   clonedState[action.post.id].commentCount = action.post.commentCount + 1;
   return clonedState;
 };
-export const decrementVotescore = (state, action) => {
+export const decrementCommentcount = (state, action) => {
   let clonedState = _.cloneDeep(state);
   clonedState[action.post.id].commentCount = action.post.commentCount - 1;
   return clonedState;

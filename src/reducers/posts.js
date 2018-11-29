@@ -1,7 +1,7 @@
 import {
   ADD_POST,
-  DECREMENT_VOTESCORE,
-  INCREMENT_VOTESCORE,
+  DECREMENT_COMMENTCOUNT,
+  INCREMENT_COMMENTCOUNT,
   RECEIVE_POSTS,
   REMOVE_POST,
   TOGGLE_POST,
@@ -9,9 +9,9 @@ import {
 } from "../actions/variables";
 import {
   addPost,
-  decrementVotescore,
+  decrementCommentcount,
   handleRemovePost,
-  incrementVotescore,
+  incrementCommentcount,
   receivePosts,
   togglePost,
   updatePost
@@ -27,10 +27,10 @@ export default function posts(state = {}, action) {
       return handleRemovePost(state, action);
     case TOGGLE_POST:
       return togglePost(state, action);
-    case INCREMENT_VOTESCORE:
-      return incrementVotescore(state, action);
-    case DECREMENT_VOTESCORE:
-      return decrementVotescore(state, action);
+    case INCREMENT_COMMENTCOUNT:
+      return incrementCommentcount(state, action);
+    case DECREMENT_COMMENTCOUNT:
+      return decrementCommentcount(state, action);
     case UPDATE_POST:
       return updatePost(state, action);
     default:

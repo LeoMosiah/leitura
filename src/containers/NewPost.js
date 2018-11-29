@@ -14,34 +14,7 @@ import * as ReactDOM from "react-dom";
 import Card from "@material-ui/core/es/Card/Card";
 import Typography from "@material-ui/core/Typography/Typography";
 import * as PropTypes from "prop-types";
-
-const styles = theme => ({
-  layout: {
-    textAlign: "center",
-    border: "1px solid #ccc",
-    width: 800,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: theme.spacing.unit * 20,
-    padding: theme.spacing.unit * 5
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  header: {
-    display: "flex",
-    alignItems: "baseline"
-  },
-  button: {
-    width: 300,
-    letterSpacing: 3.5,
-    fontSize: 20
-  },
-  bodyInput: {
-    height: 300
-  }
-});
+import { styles } from "./newPostStyles";
 
 const shouldBeDisable = (category, body, title) => {
   if (!category || !body || !title) return true;

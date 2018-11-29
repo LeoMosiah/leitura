@@ -15,7 +15,7 @@ import { timestampToDate } from "../utils/helper";
 import { styles } from "./styles/commentStyle";
 
 function Comment(props) {
-  const { comment, classes, handleDelete, handleVoteComment } = props;
+  const { comment, classes, commentCallbackHandler } = props;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -25,16 +25,30 @@ function Comment(props) {
         <Typography component="p">{comment.body}</Typography>
       </CardContent>
       <CardActions className={classes.cardAction}>
-        <IconButton onClick={() => handleVoteComment(comment, "upVote")}>
+        <IconButton
+          onClick={() =>
+            commentCallbackHandler("vote", {
+              comment: comment,
+              option: "upVote"
+            })
+          }
+        >
           <ThumbsUpIcon color="primary" />
         </IconButton>
         <IconButton>
           <Badge badgeContent={comment.voteScore} color="secondary" />
         </IconButton>
-        <IconButton onClick={() => handleVoteComment(comment, "downVote")}>
+        <IconButton
+          onClick={() =>
+            commentCallbackHandler("vote", {
+              comment: comment,
+              option: "downVote"
+            })
+          }
+        >
           <ThumbsDownIcon color="secondary" />
         </IconButton>
-        <IconButton onClick={() => handleDelete(comment.id)}>
+        <IconButton onClick={() => commentCallbackHandler("delete", comment)}>
           <DeleteForeverOutlinedIcon color="secondary" />
         </IconButton>
         <IconButton>

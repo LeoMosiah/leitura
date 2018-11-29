@@ -18,106 +18,61 @@ import * as PropTypes from "prop-types";
 import { styles } from "./styles/postDetails";
 
 function PostDetails(props) {
-  const {
-    classes,
-    post,
-    postComments,
-    handleChange,
-    handleSubmit,
-    handleVotePost,
-    authedUser,
-    handleDeletePost
-  } = props;
+  const { classes, post, postCallbackHandler, authedUser } = props;
   return (
-    <React.Fragment>
-      <Card className={classes.post}>
-        <div className={classes.postHeader}>
-          <div className={classes.postHeaderAvatar}>
-            <Avatar>{post.author[0].toUpperCase()}</Avatar>
-          </div>
-          <div className={classes.postHeaderDetails}>
-            <Typography>{post.author}</Typography>
-            <Typography>{post.timestamp}</Typography>
-          </div>
+    <Card className={classes.post}>
+      <div className={classes.postHeader}>
+        <div className={classes.postHeaderAvatar}>
+          <Avatar>{post.author[0].toUpperCase()}</Avatar>
         </div>
-        <div className={classes.postMain}>
-          <Typography variant="h5" component="h2">
-            {post.title}
-          </Typography>
-          <Typography>{post.body}</Typography>
+        <div className={classes.postHeaderDetails}>
+          <Typography>{post.author}</Typography>
+          <Typography>{post.timestamp}</Typography>
         </div>
-        <CardActions>
+      </div>
+      <div className={classes.postMain}>
+        <Typography variant="h5" component="h2">
+          {post.title}
+        </Typography>
+        <Typography>{post.body}</Typography>
+      </div>
+      <CardActions>
+        <IconButton>
+          <ThumbsUpIcon
+            color="primary"
+            onClick={() =>
+              postCallbackHandler("vote", { post: post, option: "upVote" })
+            }
+          />
+        </IconButton>
+        <IconButton>
+          <Badge badgeContent={post.voteScore} color="secondary" />
+        </IconButton>
+        <IconButton>
+          <ThumbsDownIcon
+            color="secondary"
+            onClick={() =>
+              postCallbackHandler("vote", { post: post, option: "downVote" })
+            }
+          />
+        </IconButton>
+        {authedUser === post.author && (
           <IconButton>
-            <ThumbsUpIcon
-              color="primary"
-              onClick={() => handleVotePost(post, "upVote")}
-            />
+            <Link to={`/post/edit/${post.id}`}>
+              <EditOutlinedIcon color="default" />
+            </Link>
           </IconButton>
+        )}
+        {authedUser === post.author && (
           <IconButton>
-            <Badge badgeContent={post.voteScore} color="secondary" />
-          </IconButton>
-          <IconButton>
-            <ThumbsDownIcon
+            <DeleteForeverOutlinedIcon
               color="secondary"
-              onClick={() => handleVotePost(post, "downVote")}
+              onClick={event => postCallbackHandler("delete", post.id)}
             />
           </IconButton>
-          {authedUser === post.author && (
-            <IconButton>
-              <Link to={`/post/edit/${post.id}`}>
-                <EditOutlinedIcon color="default" />
-              </Link>
-            </IconButton>
-          )}
-          {authedUser === post.author && (
-            <IconButton>
-              <DeleteForeverOutlinedIcon
-                color="secondary"
-                onClick={event => handleDeletePost(event, post.id)}
-              />
-            </IconButton>
-          )}
-        </CardActions>
-      </Card>
-      <Typography
-        className={classes.commentsCard}
-        variant="h6"
-        component="h2"
-      >{`Comments (${postComments.length}):`}</Typography>
-      <div className={classes.commentsCard}>
-        {postComments.length !== 0 &&
-          postComments.map(comment => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              handleDelete={props.handleDelete}
-              handleVoteComment={props.handleVoteComment}
-            />
-          ))}
-      </div>
-      <div className={classes.commentsForm}>
-        <TextField
-          label="New Comment"
-          placeholder="Write your comment"
-          multiline
-          fullWidth
-          className={classes.textField}
-          value={props.comment}
-          margin="normal"
-          variant="outlined"
-          onChange={event => handleChange(event.target.value)}
-        />
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.button}
-          onClick={event => handleSubmit(event)}
-          disabled={!props.comment}
-        >
-          Submit
-        </Button>
-      </div>
-    </React.Fragment>
+        )}
+      </CardActions>
+    </Card>
   );
 }
 
