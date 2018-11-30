@@ -15,7 +15,7 @@ import { timestampToDate } from "../utils/helper";
 import { styles } from "./styles/commentStyle";
 
 function Comment(props) {
-  const { comment, classes, commentCallbackHandler } = props;
+  const { comment, classes, commentCallbackHandler, key } = props;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -52,7 +52,15 @@ function Comment(props) {
           <DeleteForeverOutlinedIcon color="secondary" />
         </IconButton>
         <IconButton>
-          <EditOutlinedIcon color="default" />
+          <EditOutlinedIcon
+            color="primary"
+            onClick={() =>
+              commentCallbackHandler("edit", {
+                body: comment.body,
+                id: comment.id
+              })
+            }
+          />
         </IconButton>
       </CardActions>
     </Card>

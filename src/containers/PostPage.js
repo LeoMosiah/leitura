@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import connect from "react-redux/src/connect/connect";
 import { removePost } from "../actions/posts";
 import {
@@ -30,16 +29,32 @@ import CommentForm from "../components/CommentForm";
 class PostPage extends Component {
   state = {
     body: "",
-    isEditing: false
+    isEditing: false,
+    commentId: ""
+  };
+  getNewComment = () => {
+    return {
+      id: generateUUID(),
+      timestamp: Date.now(),
+      body: this.state.body,
+      author: this.props.authedUser,
+      parentId: this.props.post.id,
+      voteScore: 0
+    };
   };
   postCallbackHandler = async (type, data) => {
     switch (type) {
       case "vote":
         this.props.dispatch(togglePost(data.post, data.option));
         await votePost(data.post.id, data.option);
+        break;
       case "delete":
         this.props.dispatch(removePost(data));
+        this.setState({
+          toHome: true
+        });
         await deletePost(data);
+        break;
     }
   };
   commentCallbackHandler = async (type, data) => {
@@ -48,59 +63,36 @@ class PostPage extends Component {
         this.props.dispatch(removeComment(data.id));
         await deleteComment(data.id);
         this.props.dispatch(decrementCommentcount(this.props.post));
+        break;
       case "vote":
         this.props.dispatch(toggleComment(data.comment, data.option));
         await voteComment(data.comment.id, data.option);
+        break;
       case "submit":
-        const { body } = this.state;
-        const comment = {
-          id: generateUUID(),
-          timestamp: Date.now(),
-          body,
-          author: this.props.authedUser,
-          parentId: this.props.post.id,
-          voteScore: 0
-        };
-        this.props.dispatch(addComment(comment));
+        this.props.dispatch(addComment(this.getNewComment()));
         this.props.dispatch(incrementCommentcount(this.props.post));
         this.setState({
           body: ""
         });
-        await saveComment(comment);
+        await saveComment(this.getNewComment());
+        break;
       case "change":
         this.setState({
           body: data
         });
+        break;
+      case "edit":
+        this.setState({
+          isEditing: !this.state.isEditing,
+          body: !this.state.isEditing ? data.body : "",
+          commentId: data.id
+        });
+        break;
     }
-  };
-  handleChange = string => {
-    this.setState({
-      body: string
-    });
-  };
-  handleSubmit = async e => {
-    e.preventDefault();
-    const { post, authedUser, dispatch } = this.props;
-    const { body } = this.state;
-    const comment = {
-      id: generateUUID(),
-      timestamp: Date.now(),
-      body,
-      author: authedUser,
-      parentId: post.id,
-      voteScore: 0
-    };
-    dispatch(addComment(comment));
-    dispatch(incrementCommentcount(post));
-    this.setState({
-      body: ""
-    });
-    await saveComment(comment);
   };
   render() {
     const { post, postComments, authedUser } = this.props;
-    const { toHome, body } = this.state;
-    if (toHome) return <Redirect to="/" />;
+    const { toHome, isEditing } = this.state;
     return (
       <React.Fragment>
         <PostDetails
@@ -116,6 +108,7 @@ class PostPage extends Component {
         <CommentForm
           commentCallbackHandler={this.commentCallbackHandler}
           comment={this.state.body}
+          isEditing={isEditing}
         />
       </React.Fragment>
     );

@@ -14,8 +14,8 @@ class App extends Component {
   async componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
-  handleSingIn = () => {
-    this.props.dispatch(setAuthedUser("LeoMosiah"));
+  handleSingIn = username => {
+    this.props.dispatch(setAuthedUser(username));
   };
   render() {
     return (

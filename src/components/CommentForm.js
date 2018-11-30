@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 function CommentForm(props) {
-  const { classes, handleChange, commentCallbackHandler, comment } = props;
+  const { classes, commentCallbackHandler, comment, isEditing } = props;
   return (
     <div className={classes.commentsForm}>
       <TextField
@@ -19,6 +19,32 @@ function CommentForm(props) {
         variant="outlined"
         onChange={event => commentCallbackHandler("change", event.target.value)}
       />
+      <SubmitButton
+        classes={classes}
+        isEditing={isEditing}
+        commentCallbackHandler={commentCallbackHandler}
+        comment={comment}
+      />
+    </div>
+  );
+}
+
+function SubmitButton(props) {
+  const { isEditing, classes, commentCallbackHandler, comment } = props;
+  if (isEditing) {
+    return (
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() => commentCallbackHandler("submit")}
+        disabled={!comment}
+      >
+        Change
+      </Button>
+    );
+  } else {
+    return (
       <Button
         variant="outlined"
         color="primary"
@@ -28,8 +54,8 @@ function CommentForm(props) {
       >
         Submit
       </Button>
-    </div>
-  );
+    );
+  }
 }
 
 export default withStyles(styles)(CommentForm);
