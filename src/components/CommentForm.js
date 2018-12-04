@@ -37,7 +37,7 @@ function SubmitButton(props) {
         variant="outlined"
         color="primary"
         className={classes.button}
-        onClick={() => commentCallbackHandler("submit")}
+        onClick={() => commentCallbackHandler("update")}
         disabled={!comment}
       >
         Change

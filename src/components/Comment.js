@@ -15,7 +15,7 @@ import { timestampToDate } from "../utils/helper";
 import { styles } from "./styles/commentStyle";
 
 function Comment(props) {
-  const { comment, classes, commentCallbackHandler, key } = props;
+  const { comment, classes, commentCallbackHandler, authedUser } = props;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -48,20 +48,21 @@ function Comment(props) {
         >
           <ThumbsDownIcon color="secondary" />
         </IconButton>
-        <IconButton onClick={() => commentCallbackHandler("delete", comment)}>
-          <DeleteForeverOutlinedIcon color="secondary" />
-        </IconButton>
-        <IconButton>
-          <EditOutlinedIcon
-            color="primary"
-            onClick={() =>
-              commentCallbackHandler("edit", {
-                body: comment.body,
-                id: comment.id
-              })
-            }
-          />
-        </IconButton>
+        {comment.author === authedUser && (
+          <React.Fragment>
+            <IconButton
+              onClick={() => commentCallbackHandler("delete", comment)}
+            >
+              <DeleteForeverOutlinedIcon color="secondary" />
+            </IconButton>
+            <IconButton>
+              <EditOutlinedIcon
+                color="primary"
+                onClick={() => commentCallbackHandler("edit", comment)}
+              />
+            </IconButton>
+          </React.Fragment>
+        )}
       </CardActions>
     </Card>
   );

@@ -2,17 +2,25 @@ import React, { Component } from "react";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import SignIn from "../components/SignIn";
 import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
 import { deletePost } from "../utils/api";
-import { removePost } from "../actions/posts";
+import { removePost, reorderPosts } from "../actions/posts";
 
 class Home extends Component {
+  state = {
+    descending: true
+  };
   handleDelete = async (e, id) => {
     e.preventDefault();
     this.props.dispatch(removePost(id));
     await deletePost(id);
+  };
+  handleReorder = option => {
+    this.props.dispatch(reorderPosts(this.props.posts, option));
+    this.setState({
+      descending: !this.state.descending
+    });
   };
   render() {
     const { posts, categories, authedUser } = this.props;
@@ -24,6 +32,9 @@ class Home extends Component {
           categories={categories}
           authedUser={authedUser}
           handleDelete={this.handleDelete}
+          handleReorder={this.handleReorder}
+          disposition={this.state.descending}
+          params={this.props.match.params}
         />
         <Footer />
       </div>
@@ -33,7 +44,7 @@ class Home extends Component {
 
 function mapStateToProps({ posts, categories, authedUser }) {
   return {
-    posts: Object.values(posts).sort((a, b) => b.timestamp - b.timestamp),
+    posts,
     categories,
     authedUser
   };

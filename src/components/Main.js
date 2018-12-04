@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import Divider from "@material-ui/core/Divider/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Reorder from "@material-ui/icons/ReorderOutlined";
+import SwapVert from "@material-ui/icons/SwapVertOutlined";
 import { withStyles } from "@material-ui/core";
 import Post from "./Post";
 import { Link } from "react-router-dom";
@@ -13,7 +13,23 @@ import { styles } from "./styles/mainStyles";
 const social = ["GitHub", "Twitter", "Facebook"];
 
 function Main(props) {
-  const { classes, posts, categories, authedUser, handleDelete } = props;
+  const {
+    classes,
+    posts,
+    categories,
+    authedUser,
+    handleDelete,
+    handleReorder,
+    disposition,
+    params
+  } = props;
+  const byCategory = post => {
+    if (!params.category || params.category === "all") {
+      return post.category !== params.category;
+    } else {
+      return post.category === params.category;
+    }
+  };
   return (
     <main>
       <Paper className={classes.mainFeaturedPost}>
@@ -43,19 +59,21 @@ function Main(props) {
             <Typography variant="h6" gutterBottom>
               News
             </Typography>
-            <IconButton>
-              <Reorder color="default" />
+            <IconButton onClick={() => handleReorder(disposition)}>
+              <SwapVert color="default" />
             </IconButton>
           </div>
           <Divider className={classes.sidebarDivider} />
-          {posts.map(post => (
-            <Post
-              key={post.id}
-              post={post}
-              authedUser={authedUser}
-              handleDelete={handleDelete}
-            />
-          ))}
+          {Object.values(posts)
+            .filter(byCategory)
+            .map(post => (
+              <Post
+                key={post.id}
+                post={post}
+                authedUser={authedUser}
+                handleDelete={handleDelete}
+              />
+            ))}
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography

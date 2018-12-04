@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { tranformArrayIntoMap } from "../utils/helper";
 
 export const handleRemovePost = (state, action) => {
   const clonedState = _.cloneDeep(state);
@@ -75,4 +76,17 @@ export const updateComment = (state, action) => {
   let clonedState = _.cloneDeep(state);
   clonedState[action.comment.id] = action.comment;
   return clonedState;
+};
+
+export const reorderPosts = (state, action) => {
+  let clonedState = _.cloneDeep(state);
+  if (action.option) {
+    return tranformArrayIntoMap(
+      Object.values(clonedState).sort((a, b) => b.timestamp - a.timestamp)
+    );
+  } else {
+    return tranformArrayIntoMap(
+      Object.values(clonedState).sort((a, b) => a.timestamp - b.timestamp)
+    );
+  }
 };

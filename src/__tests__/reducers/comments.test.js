@@ -266,6 +266,7 @@ describe("Comments reducer", function() {
       body: "new body 3",
       title: "new title 3"
     };
+
     expect(commentsReducer(initialState, updateComment(comment))).toEqual(
       expecteState
     );

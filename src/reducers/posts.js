@@ -5,7 +5,8 @@ import {
   RECEIVE_POSTS,
   REMOVE_POST,
   TOGGLE_POST,
-  UPDATE_POST
+  UPDATE_POST,
+  REORDER_POSTS
 } from "../actions/variables";
 import {
   addPost,
@@ -14,7 +15,8 @@ import {
   incrementCommentcount,
   receivePosts,
   togglePost,
-  updatePost
+  updatePost,
+  reorderPosts
 } from "./handlers";
 
 export default function posts(state = {}, action) {
@@ -33,6 +35,8 @@ export default function posts(state = {}, action) {
       return decrementCommentcount(state, action);
     case UPDATE_POST:
       return updatePost(state, action);
+    case REORDER_POSTS:
+      return reorderPosts(state, action);
     default:
       return state;
   }

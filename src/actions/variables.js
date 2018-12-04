@@ -1,6 +1,7 @@
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
+export const REORDER_POSTS = "REORDER_POSTS";
 export const ADD_POST = "ADD_POST";
 export const REMOVE_POST = "REMOVE_POST";
 export const TOGGLE_POST = "TOGGLE_POST";

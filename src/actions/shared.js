@@ -5,12 +5,11 @@ import { getInitialData } from "../utils/api";
 import { setAuthedUser } from "./authedUser";
 
 export function handleInitialData() {
-  return dispatch => {
-    return getInitialData().then(({ posts, comments, categories }) => {
-      dispatch(setAuthedUser("LeoMosiah"));
-      dispatch(receiveCategories(categories));
-      dispatch(receivePosts(posts));
-      dispatch(receiveComments(comments));
-    });
+  return async dispatch => {
+    const { categories, posts, comments } = await getInitialData();
+    dispatch(setAuthedUser("Udacity"));
+    dispatch(receiveCategories(categories));
+    dispatch(receivePosts(posts));
+    dispatch(receiveComments(comments));
   };
 }

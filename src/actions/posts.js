@@ -7,7 +7,8 @@ import {
   RECEIVE_POSTS,
   REMOVE_POST,
   TOGGLE_POST,
-  UPDATE_POST
+  UPDATE_POST,
+  REORDER_POSTS
 } from "./variables";
 
 export function receivePosts(posts) {
@@ -71,5 +72,13 @@ export function updatePost(post) {
   return {
     type: UPDATE_POST,
     post
+  };
+}
+
+export function reorderPosts(posts, option) {
+  return {
+    type: REORDER_POSTS,
+    posts,
+    option: option
   };
 }

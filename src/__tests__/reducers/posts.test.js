@@ -4,9 +4,10 @@ import {
   addPost,
   removePost,
   togglePost,
-  incrementVotescore,
-  decrementVotescore,
-  updatePost
+  incrementCommentcount,
+  decrementCommentcount,
+  updatePost,
+  reorderPosts
 } from "../../actions/posts";
 
 describe("Post reducer", function() {
@@ -272,7 +273,7 @@ describe("Post reducer", function() {
       commentCount: 0
     };
 
-    expect(postsReducer(initialState, incrementVotescore(post))).toEqual(
+    expect(postsReducer(initialState, incrementCommentcount(post))).toEqual(
       expecteState
     );
   });
@@ -326,7 +327,7 @@ describe("Post reducer", function() {
       commentCount: 1
     };
 
-    expect(postsReducer(initialState, decrementVotescore(post))).toEqual(
+    expect(postsReducer(initialState, decrementCommentcount(post))).toEqual(
       expecteState
     );
   });
@@ -382,5 +383,53 @@ describe("Post reducer", function() {
     };
 
     expect(postsReducer(initialState, updatePost(post))).toEqual(expecteState);
+  });
+
+  it("should handle  reorder posts by timestamp ", function() {
+    const initialState = {
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        timestamp: 1
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        timestamp: 2
+      },
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        timestamp: 3
+      }
+    };
+
+    const expecteState = {
+      "id 3": {
+        id: "id 3",
+        body: "body 3",
+        title: "title 3",
+        timestamp: 3
+      },
+      "id 2": {
+        id: "id 2",
+        body: "body 2",
+        title: "title 2",
+        timestamp: 2
+      },
+      "id 1": {
+        id: "id 1",
+        body: "body 1",
+        title: "title 1",
+        timestamp: 1
+      }
+    };
+
+    expect(postsReducer(initialState, reorderPosts(initialState))).toEqual(
+      expecteState
+    );
   });
 });

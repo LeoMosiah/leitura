@@ -32,7 +32,7 @@ export const timestampToDate = timestamp => {
 
   const day = date.getDate();
 
-  return `${month} ${day}`;
+  return `${month} ${day}  ${date.getHours()}:${date.getMinutes()}`;
 };
 
 export function generateUUID() {

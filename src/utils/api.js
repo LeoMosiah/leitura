@@ -120,12 +120,8 @@ export async function getInitialData() {
   const commentsArrayFilteredByEmptyComments = commentsArrayByPost.filter(
     comment => comment.length
   );
-
   const posts = tranformArrayIntoMap(postsArray);
-
   const comments = tranformArrayIntoMap(commentsArrayFilteredByEmptyComments);
-
   const categories = tranformArrayIntoMap(await getCategories());
-
   return { posts, comments, categories };
 }

@@ -30,7 +30,7 @@ class PostPage extends Component {
   state = {
     body: "",
     isEditing: false,
-    commentId: ""
+    commentToChange: {}
   };
   getNewComment = () => {
     return {
@@ -54,6 +54,8 @@ class PostPage extends Component {
           toHome: true
         });
         await deletePost(data);
+        break;
+      default:
         break;
     }
   };
@@ -85,8 +87,25 @@ class PostPage extends Component {
         this.setState({
           isEditing: !this.state.isEditing,
           body: !this.state.isEditing ? data.body : "",
-          commentId: data.id
+          commentToChange: data
         });
+        break;
+      case "update":
+        const { commentToChange } = this.state;
+        const commentUpdated = {
+          ...commentToChange,
+          timestamp: Date.now(),
+          body: this.state.body
+        };
+        this.props.dispatch(updateComment(commentUpdated));
+        this.setState({
+          isEditing: false,
+          body: "",
+          commentToChange: {}
+        });
+        await changeComment(commentUpdated.id, commentUpdated.body);
+        break;
+      default:
         break;
     }
   };
@@ -104,6 +123,7 @@ class PostPage extends Component {
         <CommentsList
           postComments={postComments}
           commentCallbackHandler={this.commentCallbackHandler}
+          authedUser={authedUser}
         />
         <CommentForm
           commentCallbackHandler={this.commentCallbackHandler}

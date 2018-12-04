@@ -53,11 +53,8 @@ class NewPost extends Component {
     e.preventDefault();
     const { body, title, category } = this.state;
     const { dispatch } = this.props;
-
     let post = { body, title, category };
-
     dispatch(handleAddPost(post));
-
     this.setState(() => ({
       body: "",
       title: "",

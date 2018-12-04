@@ -5,7 +5,7 @@ import { styles } from "./styles/postDetails";
 import { withStyles } from "@material-ui/core";
 
 function CommentsList(props) {
-  const { classes, postComments } = props;
+  const { classes, postComments, authedUser } = props;
   return (
     <React.Fragment>
       <Typography
@@ -20,6 +20,7 @@ function CommentsList(props) {
               key={comment.id}
               comment={comment}
               commentCallbackHandler={props.commentCallbackHandler}
+              authedUser={authedUser}
             />
           ))}
       </div>

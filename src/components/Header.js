@@ -31,11 +31,9 @@ function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Link to="/signIn">
-          <Button variant="outlined" color="primary" size="small">
-            Sign up
-          </Button>
-        </Link>
+        <Button variant="outlined" color="primary" size="small">
+          Sign up
+        </Button>
       </Toolbar>
     </header>
   );
