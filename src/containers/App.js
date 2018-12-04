@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/new" component={NewPost} />
+        <Route exact path="/post/new" component={NewPost} />
         <Route exact path="/:category?" component={Home} />
         <Route exact path="/:category/:post_id" component={PostPage} />
         <Route exact path="/post/edit/:post_id" component={EditPost} />

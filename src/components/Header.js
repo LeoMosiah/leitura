@@ -13,7 +13,7 @@ function Header(props) {
   return (
     <header>
       <Toolbar className={classes.toolbarMain}>
-        <Link to="/new">
+        <Link to="/post/new">
           <Button variant="outlined" color="primary" size="small">
             New Post
           </Button>

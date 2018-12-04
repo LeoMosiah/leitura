@@ -1,5 +1,7 @@
 import { tranformArrayIntoMap } from "./helper";
 
+const url = "https://arcane-harbor-18219.herokuapp.com";
+
 let token = localStorage.token;
 if (!token)
   token = localStorage.token = Math.random()
