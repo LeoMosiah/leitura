@@ -4,12 +4,14 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
-import { deletePost } from "../utils/api";
-import { removePost, reorderPosts } from "../actions/posts";
+import { deletePost, votePost } from "../utils/api";
+import { removePost, reorderPosts, togglePost } from "../actions/posts";
+import { unsetAuthedUser } from "../actions/authedUser";
 
 class Home extends Component {
   state = {
-    descending: true
+    descending: true,
+    modalIsOpen: false
   };
   handleDelete = async (e, id) => {
     e.preventDefault();
@@ -22,11 +24,28 @@ class Home extends Component {
       descending: !this.state.descending
     });
   };
+  handleVote = async (post, option) => {
+    this.props.dispatch(togglePost(post, option));
+    await votePost(post.id, option);
+  };
+  handleOpenModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+  handleCloseModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
+  handleSignOut = () => {
+    this.props.dispatch(unsetAuthedUser());
+  };
   render() {
     const { posts, categories, authedUser } = this.props;
     return (
-      <div>
-        <Header />
+      <React.Fragment>
+        <Header
+          handleOpenModal={this.handleOpenModal}
+          authedUser={authedUser}
+          handleSignOut={this.handleSignOut}
+        />
         <Main
           posts={posts}
           categories={categories}
@@ -35,9 +54,13 @@ class Home extends Component {
           handleReorder={this.handleReorder}
           disposition={this.state.descending}
           params={this.props.match.params}
+          handleVote={this.handleVote}
+          modalIsOpen={this.state.modalIsOpen}
+          handleOpenModal={this.handleOpenModal}
+          handleCloseModal={this.handleCloseModal}
         />
         <Footer />
-      </div>
+      </React.Fragment>
     );
   }
 }

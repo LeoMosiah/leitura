@@ -8,6 +8,7 @@ import NewPost from "./NewPost";
 import * as PropTypes from "prop-types";
 import EditPost from "./EditPost";
 import PageNotFound from "../components/PageNotFound";
+import SignInContainer from "./SignInContainer";
 
 class App extends Component {
   async componentDidMount() {
@@ -17,6 +18,7 @@ class App extends Component {
     return (
       <Switch>
         <Route exact path="/post/new" component={NewPost} />
+        <Route exact path="/signIn" component={SignInContainer} />
         <Route exact path="/:category?" component={Home} />
         <Route exact path="/:category/:post_id" component={PostPage} />
         <Route exact path="/post/edit/:post_id" component={EditPost} />

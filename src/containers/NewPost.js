@@ -34,20 +34,14 @@ class NewPost extends Component {
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
     });
   }
-  handleBody = string => {
-    this.setState({
-      body: string
-    });
+  handleBody = body => {
+    this.setState({ body });
   };
-  handleTitle = string => {
-    this.setState({
-      title: string
-    });
+  handleTitle = title => {
+    this.setState({ title });
   };
-  handleCategory = string => {
-    this.setState({
-      category: string
-    });
+  handleCategory = category => {
+    this.setState({ category });
   };
   handleSubmit = e => {
     e.preventDefault();

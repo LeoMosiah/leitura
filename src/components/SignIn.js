@@ -4,8 +4,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import LockIcon from "@material-ui/icons/LockOutlined";
@@ -14,23 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Redirect } from "react-router-dom";
 import { styles } from "./styles/signInStyles";
-import { setAuthedUser } from "../actions/authedUser";
 
 class SignIn extends Component {
-  state = {
-    username: "",
-    toHome: false
-  };
-  handleSingIn = e => {
-    e.preventDefault();
-    this.props.dispatch(setAuthedUser(this.state.username));
-    this.setState({
-      toHome: !this.state.toHome
-    });
-  };
-  handleChange = string => {
-    this.setState({ username: string });
-  };
   render() {
     const {
       classes,
@@ -61,10 +44,6 @@ class SignIn extends Component {
                 autoFocus
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth

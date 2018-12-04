@@ -1,6 +1,6 @@
 # Leitura
 
-Leitura it's a web application made for the React Udacity Nanodegree program.
+Leitura it's a web application of content and comments build with react and redux. It allows user to write and read posts and comments as well as vote.
 
 ## Instalation
 
@@ -18,7 +18,7 @@ npm start
 
 ## Test
 
-All tests were made using cypress framework, after executing the command run all tests available.
+All tests were made using react scrips tests , after executing the command run all tests available.
 
 ```javascript
 npm test

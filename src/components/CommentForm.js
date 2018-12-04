@@ -3,9 +3,17 @@ import { withStyles } from "@material-ui/core";
 import { styles } from "./styles/postDetails";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import SimpleModalWrapped from "./Modal";
 
 function CommentForm(props) {
-  const { classes, commentCallbackHandler, comment, isEditing } = props;
+  const {
+    classes,
+    commentCallbackHandler,
+    comment,
+    isEditing,
+    modalIsOpen,
+    handleCloseModal
+  } = props;
   return (
     <div className={classes.commentsForm}>
       <TextField
@@ -24,6 +32,10 @@ function CommentForm(props) {
         isEditing={isEditing}
         commentCallbackHandler={commentCallbackHandler}
         comment={comment}
+      />
+      <SimpleModalWrapped
+        modalIsOpen={modalIsOpen}
+        handleCloseModal={handleCloseModal}
       />
     </div>
   );

@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core";
 import Post from "./Post";
 import { Link } from "react-router-dom";
 import { styles } from "./styles/mainStyles";
+import SimpleModalWrapped from "./Modal";
 
 const social = ["GitHub", "Twitter", "Facebook"];
 
@@ -21,7 +22,10 @@ function Main(props) {
     handleDelete,
     handleReorder,
     disposition,
-    params
+    params,
+    handleVote,
+    modalIsOpen,
+    handleCloseModal
   } = props;
   const byCategory = post => {
     if (!params.category || params.category === "all") {
@@ -72,6 +76,7 @@ function Main(props) {
                 post={post}
                 authedUser={authedUser}
                 handleDelete={handleDelete}
+                handleVote={handleVote}
               />
             ))}
         </Grid>
@@ -84,7 +89,7 @@ function Main(props) {
             Categories
           </Typography>
           <Divider className={classes.sidebarDivider} />
-          <Link to="/all">
+          <Link to="/">
             <Typography>All</Typography>
           </Link>
           {Object.values(categories).map(category => (
@@ -105,6 +110,10 @@ function Main(props) {
           ))}
         </Grid>
       </Grid>
+      <SimpleModalWrapped
+        modalIsOpen={modalIsOpen}
+        handleCloseModal={handleCloseModal}
+      />
     </main>
   );
 }

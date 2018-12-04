@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography/Typography";
-import { Redirect } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import CardActions from "@material-ui/core/CardActions";
@@ -14,64 +13,67 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import * as PropTypes from "prop-types";
 import { styles } from "./styles/postDetails";
+import Header from "./Header";
 
 function PostDetails(props) {
-  const { classes, post, postCallbackHandler, authedUser, toHome } = props;
-  if (toHome) return <Redirect to="/" />;
+  const { classes, post, postCallbackHandler, authedUser } = props;
   return (
-    <Card className={classes.post}>
-      <div className={classes.postHeader}>
-        <div className={classes.postHeaderAvatar}>
-          <Avatar>{post.author[0].toUpperCase()}</Avatar>
+    <React.Fragment>
+      <Header />
+      <Card className={classes.post}>
+        <div className={classes.postHeader}>
+          <div className={classes.postHeaderAvatar}>
+            <Avatar>{post.author[0].toUpperCase()}</Avatar>
+          </div>
+          <div className={classes.postHeaderDetails}>
+            <Typography>{post.author}</Typography>
+            <Typography>{post.timestamp}</Typography>
+          </div>
         </div>
-        <div className={classes.postHeaderDetails}>
-          <Typography>{post.author}</Typography>
-          <Typography>{post.timestamp}</Typography>
+        <div className={classes.postMain}>
+          <Typography variant="h5" component="h2">
+            {post.title}
+          </Typography>
+          <Typography>{post.body}</Typography>
         </div>
-      </div>
-      <div className={classes.postMain}>
-        <Typography variant="h5" component="h2">
-          {post.title}
-        </Typography>
-        <Typography>{post.body}</Typography>
-      </div>
-      <CardActions>
-        <IconButton>
-          <ThumbsUpIcon
-            color="primary"
-            onClick={() =>
-              postCallbackHandler("vote", { post: post, option: "upVote" })
-            }
-          />
-        </IconButton>
-        <IconButton>
-          <Badge badgeContent={post.voteScore} color="secondary" />
-        </IconButton>
-        <IconButton>
-          <ThumbsDownIcon
-            color="secondary"
-            onClick={() =>
-              postCallbackHandler("vote", { post: post, option: "downVote" })
-            }
-          />
-        </IconButton>
-        {authedUser === post.author && (
+        <CardActions>
           <IconButton>
-            <Link to={`/post/edit/${post.id}`}>
-              <EditOutlinedIcon color="default" />
-            </Link>
-          </IconButton>
-        )}
-        {authedUser === post.author && (
-          <IconButton>
-            <DeleteForeverOutlinedIcon
-              color="secondary"
-              onClick={event => postCallbackHandler("delete", post.id)}
+            <ThumbsUpIcon
+              color="primary"
+              onClick={() =>
+                postCallbackHandler("vote", { post: post, option: "upVote" })
+              }
             />
           </IconButton>
-        )}
-      </CardActions>
-    </Card>
+          <IconButton>
+            <Badge badgeContent={post.voteScore} color="secondary" />
+          </IconButton>
+          <IconButton>
+            <ThumbsDownIcon
+              color="secondary"
+              onClick={() =>
+                postCallbackHandler("vote", { post: post, option: "downVote" })
+              }
+            />
+          </IconButton>
+          {authedUser === post.author && (
+            <IconButton>
+              <Link to={`/post/edit/${post.id}`}>
+                <EditOutlinedIcon color="default" />
+              </Link>
+            </IconButton>
+          )}
+          {authedUser === post.author && (
+            <IconButton>
+              <DeleteForeverOutlinedIcon
+                color="secondary"
+                onClick={event => postCallbackHandler("delete", post.id)}
+              />
+            </IconButton>
+          )}
+        </CardActions>
+      </Card>
+    </React.Fragment>
   );
 }
 

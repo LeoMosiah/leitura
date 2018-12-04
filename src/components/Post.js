@@ -9,7 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import CommentIcon from "@material-ui/icons/Comment";
-import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
+import ThumbsUpIcon from "@material-ui/icons/ThumbUpOutlined";
+import ThumbsDownIcon from "@material-ui/icons/ThumbDownOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { timestampToDate } from "../utils/helper";
 import { Link } from "react-router-dom";
@@ -28,7 +29,7 @@ class Post extends Component {
     this.setState({ anchorEl: null });
   };
   render() {
-    const { classes, post, authedUser, handleDelete } = this.props;
+    const { classes, post, authedUser, handleDelete, handleVote } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     return (
@@ -62,9 +63,19 @@ class Post extends Component {
             </Badge>
           </IconButton>
           <IconButton>
-            <Badge badgeContent={post.voteScore} color="secondary">
-              <ThumbsUpDownIcon color="primary" />
-            </Badge>
+            <ThumbsUpIcon
+              color="primary"
+              onClick={() => handleVote(post, "upVote")}
+            />
+          </IconButton>
+          <IconButton>
+            <Badge badgeContent={post.voteScore} color="secondary" />
+          </IconButton>
+          <IconButton>
+            <ThumbsDownIcon
+              color="secondary"
+              onClick={() => handleVote(post, "downVote")}
+            />
           </IconButton>
           <Link to={`/${post.category}/${post.id}`}>
             <Button size="small" color="primary">

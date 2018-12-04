@@ -25,12 +25,15 @@ import {
 import * as PropTypes from "prop-types";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
+import { Redirect } from "react-router-dom";
+import PageNotFound from "../components/PageNotFound";
 
 class PostPage extends Component {
   state = {
     body: "",
     isEditing: false,
-    commentToChange: {}
+    commentToChange: {},
+    modalIsOpen: false
   };
   getNewComment = () => {
     return {
@@ -71,12 +74,14 @@ class PostPage extends Component {
         await voteComment(data.comment.id, data.option);
         break;
       case "submit":
-        this.props.dispatch(addComment(this.getNewComment()));
-        this.props.dispatch(incrementCommentcount(this.props.post));
-        this.setState({
-          body: ""
-        });
-        await saveComment(this.getNewComment());
+        if (this.props.authedUser) {
+          this.props.dispatch(addComment(this.getNewComment()));
+          this.props.dispatch(incrementCommentcount(this.props.post));
+          this.setState({
+            body: ""
+          });
+          await saveComment(this.getNewComment());
+        } else this.handleOpenModal();
         break;
       case "change":
         this.setState({
@@ -109,9 +114,17 @@ class PostPage extends Component {
         break;
     }
   };
+  handleOpenModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+  handleCloseModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
   render() {
     const { post, postComments, authedUser } = this.props;
     const { toHome, isEditing } = this.state;
+    if (toHome) return <Redirect to="/" />;
+    if (!post) return <PageNotFound />;
     return (
       <React.Fragment>
         <PostDetails
@@ -129,6 +142,8 @@ class PostPage extends Component {
           commentCallbackHandler={this.commentCallbackHandler}
           comment={this.state.body}
           isEditing={isEditing}
+          handleCloseModal={this.handleCloseModal}
+          modalIsOpen={this.state.modalIsOpen}
         />
       </React.Fragment>
     );
