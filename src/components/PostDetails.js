@@ -18,62 +18,59 @@ import Header from "./Header";
 function PostDetails(props) {
   const { classes, post, postCallbackHandler, authedUser } = props;
   return (
-    <React.Fragment>
-      <Header />
-      <Card className={classes.post}>
-        <div className={classes.postHeader}>
-          <div className={classes.postHeaderAvatar}>
-            <Avatar>{post.author[0].toUpperCase()}</Avatar>
-          </div>
-          <div className={classes.postHeaderDetails}>
-            <Typography>{post.author}</Typography>
-            <Typography>{post.timestamp}</Typography>
-          </div>
+    <Card className={classes.post}>
+      <div className={classes.postHeader}>
+        <div className={classes.postHeaderAvatar}>
+          <Avatar>{post.author[0].toUpperCase()}</Avatar>
         </div>
-        <div className={classes.postMain}>
-          <Typography variant="h5" component="h2">
-            {post.title}
-          </Typography>
-          <Typography>{post.body}</Typography>
+        <div className={classes.postHeaderDetails}>
+          <Typography>{post.author}</Typography>
+          <Typography>{post.timestamp}</Typography>
         </div>
-        <CardActions>
+      </div>
+      <div className={classes.postMain}>
+        <Typography variant="h5" component="h2">
+          {post.title}
+        </Typography>
+        <Typography>{post.body}</Typography>
+      </div>
+      <CardActions>
+        <IconButton>
+          <ThumbsUpIcon
+            color="primary"
+            onClick={() =>
+              postCallbackHandler("vote", { post: post, option: "upVote" })
+            }
+          />
+        </IconButton>
+        <IconButton>
+          <Badge badgeContent={post.voteScore} color="secondary" />
+        </IconButton>
+        <IconButton>
+          <ThumbsDownIcon
+            color="secondary"
+            onClick={() =>
+              postCallbackHandler("vote", { post: post, option: "downVote" })
+            }
+          />
+        </IconButton>
+        {authedUser === post.author && (
           <IconButton>
-            <ThumbsUpIcon
-              color="primary"
-              onClick={() =>
-                postCallbackHandler("vote", { post: post, option: "upVote" })
-              }
-            />
+            <Link to={`/post/edit/${post.id}`}>
+              <EditOutlinedIcon color="default" />
+            </Link>
           </IconButton>
+        )}
+        {authedUser === post.author && (
           <IconButton>
-            <Badge badgeContent={post.voteScore} color="secondary" />
-          </IconButton>
-          <IconButton>
-            <ThumbsDownIcon
+            <DeleteForeverOutlinedIcon
               color="secondary"
-              onClick={() =>
-                postCallbackHandler("vote", { post: post, option: "downVote" })
-              }
+              onClick={event => postCallbackHandler("delete", post.id)}
             />
           </IconButton>
-          {authedUser === post.author && (
-            <IconButton>
-              <Link to={`/post/edit/${post.id}`}>
-                <EditOutlinedIcon color="default" />
-              </Link>
-            </IconButton>
-          )}
-          {authedUser === post.author && (
-            <IconButton>
-              <DeleteForeverOutlinedIcon
-                color="secondary"
-                onClick={event => postCallbackHandler("delete", post.id)}
-              />
-            </IconButton>
-          )}
-        </CardActions>
-      </Card>
-    </React.Fragment>
+        )}
+      </CardActions>
+    </Card>
   );
 }
 

@@ -16,10 +16,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import * as PropTypes from "prop-types";
 import { styles } from "./newPostStyles";
 
-const shouldBeDisable = (category, body, title) => {
-  if (!category || !body || !title) return true;
-  else return false;
-};
+const shouldBeDisable = (category, body, title) => !category || !body || !title;
 
 class NewPost extends Component {
   state = {
@@ -95,9 +92,9 @@ class NewPost extends Component {
                 />
               }
             >
-              <MenuItem value="React">React</MenuItem>
-              <MenuItem value="Redux">Redux</MenuItem>
-              <MenuItem value="Udacity">Udacity</MenuItem>
+              <MenuItem value="react">React</MenuItem>
+              <MenuItem value="redux">Redux</MenuItem>
+              <MenuItem value="udacity">Udacity</MenuItem>
             </Select>
           </FormControl>
         </div>

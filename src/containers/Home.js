@@ -41,11 +41,6 @@ class Home extends Component {
     const { posts, categories, authedUser } = this.props;
     return (
       <React.Fragment>
-        <Header
-          handleOpenModal={this.handleOpenModal}
-          authedUser={authedUser}
-          handleSignOut={this.handleSignOut}
-        />
         <Main
           posts={posts}
           categories={categories}
