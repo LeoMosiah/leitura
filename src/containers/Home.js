@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
 import { deletePost, votePost } from "../utils/api";
