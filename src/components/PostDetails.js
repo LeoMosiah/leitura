@@ -13,7 +13,6 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import * as PropTypes from "prop-types";
 import { styles } from "./styles/postDetails";
-import Header from "./Header";
 
 function PostDetails(props) {
   const { classes, post, postCallbackHandler, authedUser } = props;
