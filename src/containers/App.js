@@ -16,9 +16,6 @@ class App extends Component {
   async componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
-  handleOpenModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
   handleSignOut = () => {
     this.props.dispatch(unsetAuthedUser());
   };
@@ -26,7 +23,6 @@ class App extends Component {
     return (
       <React.Fragment>
         <Header
-          handleOpenModal={this.handleOpenModal}
           authedUser={this.props.authedUser}
           handleSignOut={this.handleSignOut}
         />
