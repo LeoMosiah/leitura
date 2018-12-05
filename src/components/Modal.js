@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button/Button";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -51,7 +52,16 @@ class SimpleModal extends React.Component {
             or comments.
           </Typography>
           <Typography variant="p" className={classes.link}>
-            <Link to="/signIn">Sign In</Link>
+            <Link to="/signIn">
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => handleCloseModal()}
+              >
+                Sign In
+              </Button>
+            </Link>
           </Typography>
           <SimpleModalWrapped />
         </div>
